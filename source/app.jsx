@@ -8,7 +8,9 @@ var App = React.createClass({
 
   render: function() {
     return <div className='ferry-schedule-app'>
-      <RouteHandler key={this.routeHandlerKey()} />
+      <RouteHandler 
+        key={this.routeHandlerKey()} 
+        routerState={this.props.routerState} />
     </div>;
   }
 

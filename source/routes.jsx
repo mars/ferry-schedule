@@ -9,9 +9,9 @@ var App = require('ferry-schedule/app');
 var Listing = require('ferry-schedule/screens/listing');
 
 var routes = (
-  <Route handler={App} path="/">
+  <Route handler={App}>
     <Route name="listing" handler={Listing} />
-    <Redirect from="/" to="/listing" />
+    <Redirect from="/" to="listing" />
   </Route>
 );
 

@@ -1,17 +1,43 @@
-var webpackEntry = require('./config/webpack/entry.js');
-var webpackOutput = require('./config/webpack/output.js');
 var webpackModule = require('./config/webpack/module.js');
 var webpackResolve = require('./config/webpack/resolve.js');
 
-module.exports = {
+module.exports = [
+  {
+    name: "browser",
 
-  target: "web",
-  debug: true,
-  
-  // configs shared between environments
-  entry: webpackEntry,
-  output: webpackOutput,
-  module: webpackModule,
-  resolve: webpackResolve
+    target: "web",
+    debug: true,
 
-};
+    entry: {
+      'ferry-schedule': './source/main.jsx'
+    },
+    output: {
+      filename: '[name].bundle.js',
+      path: './dist'
+    },
+    
+    // configs shared between environments
+    module: webpackModule,
+    resolve: webpackResolve
+
+  },
+  {
+    name: "server",
+
+    target: "node",
+    debug: true,
+
+    entry: {
+      'ferry-schedule-server': './source/routes.jsx'
+    },
+    output: {
+      filename: '[name].bundle.js',
+      path: './server'
+    },
+    
+    // configs shared between environments
+    module: webpackModule,
+    resolve: webpackResolve
+
+  }
+];
