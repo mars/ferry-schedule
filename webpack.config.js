@@ -20,24 +20,5 @@ module.exports = [
     module: webpackModule,
     resolve: webpackResolve
 
-  },
-  {
-    name: "server",
-
-    target: "node",
-    debug: true,
-
-    entry: {
-      'ferry-schedule-server': './source/routes.jsx'
-    },
-    output: {
-      filename: '[name].bundle.js',
-      path: './server'
-    },
-    
-    // configs shared between environments
-    module: webpackModule,
-    resolve: webpackResolve
-
   }
 ];

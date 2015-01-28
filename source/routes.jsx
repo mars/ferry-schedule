@@ -5,13 +5,12 @@ var DefaultRoute = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
 var Redirect = Router.Redirect;
 
-var App = require('ferry-schedule/app');
-var Listing = require('ferry-schedule/screens/listing');
+var App = require('./app');
+var Listing = require('./screens/listing');
 
 var routes = (
   <Route handler={App}>
-    <Route name="listing" handler={Listing} />
-    <Redirect from="/" to="listing" />
+    <DefaultRoute name="listing" handler={Listing} />
   </Route>
 );
 

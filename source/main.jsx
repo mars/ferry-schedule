@@ -1,6 +1,6 @@
 var React = require('react');
 var Router = require('react-router');
-var routes = require('ferry-schedule/routes');
+var routes = require('./routes');
 
 React.initializeTouchEvents(true);
 
