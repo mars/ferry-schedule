@@ -10,6 +10,8 @@ var React = require('react');
 var Router = require('react-router');
 var routes = require('../source/routes');
 
+var scheduleData = require('../collector/current-data');
+
 var server = http.createServer();
 var listenPort = process.env.PORT || 8000;
 var staticFiles = new Static.Server('./dist');
@@ -23,22 +25,24 @@ server.on('request', function(request, response) {
 
       var html = React.renderToString(
         React.createElement(Handler, {
-          routerState: state
+          routerState: state,
+          scheduleData: scheduleData
         })
       );
 
-      html = '<!DOCTYPE html>'+
-        '<html>'+
-        '<head>'+
-        '  <meta charset="utf-8">'+
-        '  <meta http-equiv="X-UA-Compatible" content="IE=edge">'+
-        '  <title>Ferry Schedules</title>'+
-        '  <link rel="stylesheet" href="">'+
-        '</head>'+
-        '<body>'+
-        '  <div class="react-app">'+html+'</div>'+
-        '  <script src="ferry-schedule.bundle.js"></script>'+
-        '</body>'+
+      html = '<!DOCTYPE html>\n'+
+        '<html>\n'+
+        '<head>\n'+
+        '  <meta charset="utf-8">\n'+
+        '  <meta http-equiv="X-UA-Compatible" content="IE=edge">\n'+
+        '  <title>Ferry Schedules</title>\n'+
+        '  <link rel="stylesheet" href="">\n'+
+        '</head>\n'+
+        '<body>\n'+
+        '  <div class="react-app">'+html+'</div>\n'+
+        '  <script>window.scheduleData = '+JSON.stringify(scheduleData)+';</script>\n'+
+        '  <script src="ferry-schedule.bundle.js"></script>\n'+
+        '</body>\n'+
         '</html>';
 
       response.end(html);
