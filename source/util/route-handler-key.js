@@ -10,7 +10,7 @@ var RouteHandlerKeyMixin = {
     var routeIndex = routes.length - 1;
     var childName = this.props.routerState.routes[routeIndex].name;
     var id = this.props.routerState.params.id;
-    var key = childName+id;
+    var key = id===undefined ? childName : childName+'-'+id;
     return key;
   }
 

@@ -1,17 +1,27 @@
 var React = require('react/addons');
 var Router = require('react-router');
 var Link = Router.Link;
+var RouterState = Router.State;
+
+var moment = require('moment');
 
 var Journey = require('./journey');
 
 var Listing = React.createClass({
+  mixins: [ RouterState ],
   
   render: function() {
     return <div className='schedule-listing'>
       <table>
         <thead>
-          <th colSpan='2'>Depart</th>
-          <th colSpan='2'>Arrive</th>
+          <th colSpan='2'>
+            <Link to='listing' query={{}}>
+              Departures
+            </Link>
+            <Link to='listing' query={{ location: 'by-arrival' }}>
+              Arrivals
+            </Link>
+          </th>
         </thead>
         <tbody>
           {this.renderJourneys(this.props.scheduleData)}
@@ -24,21 +34,47 @@ var Listing = React.createClass({
     if (scheduleData === undefined) {
       return;
     }
-    var journeys = [];
+
+    // map Ferry Routes by their ID, to join with Journeys
     var routes = {};
     scheduleData.links.routes.forEach(function(route) {
       routes[route.id] = route;
     });
-    scheduleData.journeys.forEach(function(journey) {
+
+    var journeys = scheduleData.journeys.map(function(journey) {
       var route = routes[journey.linked.route];
-      journeys.push(<Journey 
-        key={journey.id} 
-        origin={route.origin} 
-        depart={journey.depart}
-        destination={route.destination} 
-        arrive={journey.arrive} />);
+      var location;
+      var time;
+      var timeFormat = 'HH:mm a';
+
+      if (this.getQuery()['location']==='by-arrival') {
+        location = route.destination;
+        time = moment(journey.arrive, timeFormat);
+      } else {
+        location = route.origin;
+        time = moment(journey.depart, timeFormat);
+      }
+
+      return <Journey 
+        key={journey.id}
+        journey={journey}
+        route={route}
+        location={location} 
+        time={time} />;
+
+    }, this);
+
+    var sortedJourneys = journeys.sort(function(a, b) {
+      a = a.props.time;
+      b = b.props.time;
+      if (a.isSame(b)) {
+        return 0;
+      } else {
+        return a.isBefore(b) ? -1 : 1;
+      }
     });
-    return journeys;
+
+    return sortedJourneys;
   }
 
 });
