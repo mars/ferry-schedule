@@ -25,6 +25,11 @@ a:active {
   color: #fff;
 }
 
+.detail {
+  font-size: 10px;
+  color: #999;
+}
+
 table {
   border-collapse: collapse;
   width: 100%;

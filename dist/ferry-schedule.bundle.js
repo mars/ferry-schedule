@@ -1934,7 +1934,9 @@
 
 	  propTypes: {
 	    location: React.PropTypes.string.isRequired,
-	    time: React.PropTypes.object.isRequired
+	    time: React.PropTypes.object.isRequired,
+	    route: React.PropTypes.object.isRequired,
+	    journey: React.PropTypes.object.isRequired
 	  },
 	  
 	  render: function() {
@@ -1942,8 +1944,25 @@
 	      textAlign: 'right'
 	    };
 
+	    var locationDesc;
+	    if (this.props.location === this.props.route.origin) {
+	      locationDesc = React.createElement("div", null, 
+	        this.props.location, 
+	        React.createElement("div", {className: "detail"}, 
+	          ' → ' + this.props.route.destination
+	        )
+	      );
+	    } else {
+	      locationDesc = React.createElement("div", null, 
+	        React.createElement("div", {className: "detail"}, 
+	          this.props.route.origin + ' → '
+	        ), 
+	        this.props.location
+	      );
+	    }
+
 	    return React.createElement("tr", null, 
-	      React.createElement("td", null, this.props.location), 
+	      React.createElement("td", null, locationDesc), 
 	      React.createElement("td", {style: timeStyle}, this.props.time.format('h:mm a'))
 	    );
 	  }

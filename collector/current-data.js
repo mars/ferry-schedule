@@ -77,12 +77,12 @@ module.exports = {
       days: 'weekdays',
       qualifier: 'Effective October 27, 2014 - April 26, 2015',
       origin: 'Tiburon',
-      destination: 'San Francisco, Ferry Bldg'
+      destination: 'SF Ferry Bldg'
     },{
       id: 'sf-tiburon-commute',
       days: 'weekdays',
       qualifier: 'Effective October 27, 2014 - April 26, 2015',
-      origin: 'San Francisco, Ferry Bldg',
+      origin: 'SF Ferry Bldg',
       destination: 'Tiburon'
     }]
   }
