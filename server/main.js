@@ -50,9 +50,10 @@ server.on('request', function(request, response) {
         '<html>\n'+
         '<head>\n'+
         '  <meta charset="utf-8">\n'+
+        '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'+
         '  <meta http-equiv="X-UA-Compatible" content="IE=edge">\n'+
         '  <title>Ferry Schedules</title>\n'+
-        '  <link rel="stylesheet" href="">\n'+
+        '  <link rel="stylesheet" href="/ferry-schedule.css">\n'+
         '</head>\n'+
         '<body>\n'+
         '  <div class="react-app">'+html+'</div>\n'+

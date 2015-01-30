@@ -1,0 +1,40 @@
+body {
+  background-color: #333;
+  color: #ccc;
+  font-family: 'Helvetica Neue', helvetica, sans-serif;
+  font-size: 100%;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+a:link { 
+  color: #f90;
+}
+a:visited { 
+  color: #111;
+}
+a:active { 
+  color: #fff;
+}
+
+.active,
+.journey-filters .current {
+  font-weight: bold;
+  color: #fff;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  font-size: 24px;
+  padding: 18px;
+}
+
+td {
+  padding: 0 8px 8px 8px;
+}

@@ -8,13 +8,13 @@ var Journey = React.createClass({
   },
   
   render: function() {
-    var style = {
-      backgroundColor: 'transparent'
+    var timeStyle = {
+      textAlign: 'right'
     };
 
-    return <tr style={style}>
+    return <tr>
       <td>{this.props.location}</td>
-      <td>{this.props.time.fromNow()}</td>
+      <td style={timeStyle}>{this.props.time.fromNow()}</td>
     </tr>;
   }
 

@@ -11,14 +11,19 @@ var Listing = React.createClass({
   mixins: [ RouterState ],
   
   render: function() {
+    var tableStyle = {};
+    var cx = React.addons.classSet;
+    var byArrival = this.isActive('listing', null, { location: 'by-arrival' });
+    var currentWhenNotByArrival = cx({ current: !byArrival });
+    
     return <div className='schedule-listing'>
-      <table>
-        <thead>
+      <table style={tableStyle}>
+        <thead className='journey-filters'>
           <th colSpan='2'>
-            <Link to='listing' query={{}}>
+            <Link to='listing' className={currentWhenNotByArrival} activeClassName='query-is-empty'>
               Departures
             </Link>
-            <Link to='listing' query={{ location: 'by-arrival' }}>
+            <Link to='listing' query={{ location: 'by-arrival' }} activeClassName='current'>
               Arrivals
             </Link>
           </th>
