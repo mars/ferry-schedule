@@ -28,13 +28,18 @@ a:active {
 table {
   border-collapse: collapse;
   width: 100%;
+  margin: 18px 0 0 0;
 }
 
 th {
   font-size: 24px;
-  padding: 18px;
+  padding: 0 0 12px 0;
 }
 
 td {
   padding: 0 8px 8px 8px;
+}
+
+.form-input {
+  font-size: 16px;
 }

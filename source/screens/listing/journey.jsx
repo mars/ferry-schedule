@@ -14,7 +14,7 @@ var Journey = React.createClass({
 
     return <tr>
       <td>{this.props.location}</td>
-      <td style={timeStyle}>{this.props.time.fromNow()}</td>
+      <td style={timeStyle}>{this.props.time.format('h:mm a')}</td>
     </tr>;
   }
 

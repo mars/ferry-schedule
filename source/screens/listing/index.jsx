@@ -2,31 +2,46 @@ var React = require('react/addons');
 var Router = require('react-router');
 var Link = Router.Link;
 var RouterState = Router.State;
+var Navigation = Router.Navigation;
 
 var moment = require('moment');
 
 var Journey = require('./journey');
 
 var Listing = React.createClass({
-  mixins: [ RouterState ],
+  mixins: [ RouterState, Navigation ],
   
   render: function() {
+    var locationName = this.getQuery()['location-name'];
+
     var tableStyle = {};
     var cx = React.addons.classSet;
     var byArrival = this.isActive('listing', null, { location: 'by-arrival' });
     var currentWhenNotByArrival = cx({ current: !byArrival });
-    
+
     return <div className='schedule-listing'>
       <table style={tableStyle}>
         <thead className='journey-filters'>
-          <th colSpan='2'>
-            <Link to='listing' className={currentWhenNotByArrival} activeClassName='query-is-empty'>
-              Departures
-            </Link>
-            <Link to='listing' query={{ location: 'by-arrival' }} activeClassName='current'>
-              Arrivals
-            </Link>
-          </th>
+          <tr>
+            <th colSpan='2'>
+              <Link to='listing'
+                query={{ 'location-name': locationName }}
+                className={currentWhenNotByArrival}
+                activeClassName='query-is-empty'>
+                Departures
+              </Link>
+              <Link to='listing'
+                query={{ location: 'by-arrival', 'location-name': locationName }}
+                activeClassName='current'>
+                Arrivals
+              </Link>
+            </th>
+          </tr>
+          <tr>
+            <th colSpan='2'>
+              <input ref="searchByName" type="search" className="form-input" placeholder="Search by Location" onChange={this.searchByLocation} value={locationName} />
+            </th>
+          </tr>
         </thead>
         <tbody>
           {this.renderJourneys(this.props.scheduleData)}
@@ -46,11 +61,17 @@ var Listing = React.createClass({
       routes[route.id] = route;
     });
 
-    var journeys = scheduleData.journeys.map(function(journey) {
+    var locationName = this.getQuery()['location-name']
+    if (locationName !== undefined && locationName !== '') {
+      locationName = locationName.toLowerCase();
+    }
+
+    var timeFormat = 'HH:mm a';
+    var journeys = [];
+    scheduleData.journeys.forEach(function(journey) {
       var route = routes[journey.linked.route];
       var location;
       var time;
-      var timeFormat = 'HH:mm a';
 
       if (this.getQuery()['location']==='by-arrival') {
         location = route.destination;
@@ -60,12 +81,21 @@ var Listing = React.createClass({
         time = moment(journey.depart, timeFormat);
       }
 
-      return <Journey 
-        key={journey.id}
-        journey={journey}
-        route={route}
-        location={location} 
-        time={time} />;
+      var shouldDisplayJourney = 
+        locationName === undefined || 
+        locationName === '' || 
+        location.toLowerCase().indexOf(locationName) >= 0;
+
+      if (shouldDisplayJourney) {
+        journeys.push(
+          <Journey 
+            key={journey.id}
+            journey={journey}
+            route={route}
+            location={location} 
+            time={time} />
+        );
+      }
 
     }, this);
 
@@ -80,6 +110,14 @@ var Listing = React.createClass({
     });
 
     return sortedJourneys;
+  },
+
+  searchByLocation: function(event) {
+    var originalQuery = this.getQuery();
+    this.replaceWith('listing', this.getParams(), {
+      'location': originalQuery['location'],
+      'location-name': event.target.value
+    });
   }
 
 });

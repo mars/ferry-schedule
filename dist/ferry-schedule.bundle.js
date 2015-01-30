@@ -157,29 +157,44 @@
 	var Router = __webpack_require__(3);
 	var Link = Router.Link;
 	var RouterState = Router.State;
+	var Navigation = Router.Navigation;
 
 	var moment = __webpack_require__(77);
 
 	var Journey = __webpack_require__(26);
 
 	var Listing = React.createClass({displayName: "Listing",
-	  mixins: [ RouterState ],
+	  mixins: [ RouterState, Navigation ],
 	  
 	  render: function() {
+	    var locationName = this.getQuery()['location-name'];
+
 	    var tableStyle = {};
 	    var cx = React.addons.classSet;
 	    var byArrival = this.isActive('listing', null, { location: 'by-arrival' });
 	    var currentWhenNotByArrival = cx({ current: !byArrival });
-	    
+
 	    return React.createElement("div", {className: "schedule-listing"}, 
 	      React.createElement("table", {style: tableStyle}, 
 	        React.createElement("thead", {className: "journey-filters"}, 
-	          React.createElement("th", {colSpan: "2"}, 
-	            React.createElement(Link, {to: "listing", className: currentWhenNotByArrival, activeClassName: "query-is-empty"}, 
-	              "Departures"
-	            ), 
-	            React.createElement(Link, {to: "listing", query: { location: 'by-arrival'}, activeClassName: "current"}, 
-	              "Arrivals"
+	          React.createElement("tr", null, 
+	            React.createElement("th", {colSpan: "2"}, 
+	              React.createElement(Link, {to: "listing", 
+	                query: { 'location-name': locationName}, 
+	                className: currentWhenNotByArrival, 
+	                activeClassName: "query-is-empty"}, 
+	                "Departures"
+	              ), 
+	              React.createElement(Link, {to: "listing", 
+	                query: { location: 'by-arrival', 'location-name': locationName}, 
+	                activeClassName: "current"}, 
+	                "Arrivals"
+	              )
+	            )
+	          ), 
+	          React.createElement("tr", null, 
+	            React.createElement("th", {colSpan: "2"}, 
+	              React.createElement("input", {ref: "searchByName", type: "search", className: "form-input", placeholder: "Search by Location", onChange: this.searchByLocation, value: locationName})
 	            )
 	          )
 	        ), 
@@ -201,11 +216,17 @@
 	      routes[route.id] = route;
 	    });
 
-	    var journeys = scheduleData.journeys.map(function(journey) {
+	    var locationName = this.getQuery()['location-name']
+	    if (locationName !== undefined && locationName !== '') {
+	      locationName = locationName.toLowerCase();
+	    }
+
+	    var timeFormat = 'HH:mm a';
+	    var journeys = [];
+	    scheduleData.journeys.forEach(function(journey) {
 	      var route = routes[journey.linked.route];
 	      var location;
 	      var time;
-	      var timeFormat = 'HH:mm a';
 
 	      if (this.getQuery()['location']==='by-arrival') {
 	        location = route.destination;
@@ -215,12 +236,21 @@
 	        time = moment(journey.depart, timeFormat);
 	      }
 
-	      return React.createElement(Journey, {
-	        key: journey.id, 
-	        journey: journey, 
-	        route: route, 
-	        location: location, 
-	        time: time});
+	      var shouldDisplayJourney = 
+	        locationName === undefined || 
+	        locationName === '' || 
+	        location.toLowerCase().indexOf(locationName) >= 0;
+
+	      if (shouldDisplayJourney) {
+	        journeys.push(
+	          React.createElement(Journey, {
+	            key: journey.id, 
+	            journey: journey, 
+	            route: route, 
+	            location: location, 
+	            time: time})
+	        );
+	      }
 
 	    }, this);
 
@@ -235,6 +265,14 @@
 	    });
 
 	    return sortedJourneys;
+	  },
+
+	  searchByLocation: function(event) {
+	    var originalQuery = this.getQuery();
+	    this.replaceWith('listing', this.getParams(), {
+	      'location': originalQuery['location'],
+	      'location-name': event.target.value
+	    });
 	  }
 
 	});
@@ -1906,7 +1944,7 @@
 
 	    return React.createElement("tr", null, 
 	      React.createElement("td", null, this.props.location), 
-	      React.createElement("td", {style: timeStyle}, this.props.time.fromNow())
+	      React.createElement("td", {style: timeStyle}, this.props.time.format('h:mm a'))
 	    );
 	  }
 
