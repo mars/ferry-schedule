@@ -146,6 +146,19 @@ module.exports = {
       qualifier: 'Effective October 27, 2014 - April 26, 2015',
       origin: 'SF Pier 41',
       destination: 'Tiburon'
+    }],
+    locations: [{
+      id: 'Tiburon',
+      latitude: 37.872819,
+      longitude: -122.455997
+    },{
+      id: 'SF Pier 41',
+      latitude: 37.809111,
+      longitude: -122.412217
+    },{
+      id: 'SF Ferry Bldg',
+      latitude: 37.795420,
+      longitude: -122.393520
     }]
   }
 };
