@@ -2,11 +2,19 @@ var React = require('react/addons');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var RouteHandlerKey = require('./util/route-handler-key');
+var immutableUpdate = React.addons.update;
 
 var GeocodeDistance = require('./util/geocode-distance');
 
 var App = React.createClass({
   mixins: [RouteHandlerKey],
+
+  getInitialState: function() {
+    return {
+      foundPosition: false,
+      locationsByDistance: []
+    };
+  },
 
   componentDidMount: function() {
     this.findPosition();
@@ -16,6 +24,8 @@ var App = React.createClass({
     return <div className='ferry-schedule-app'>
       <RouteHandler
         scheduleData={this.props.scheduleData}
+        foundPosition={this.state.foundPosition}
+        locationsByDistance={this.state.locationsByDistance}
         key={this.routeHandlerKey()} 
         routerState={this.props.routerState} />
     </div>;
@@ -38,26 +48,36 @@ var App = React.createClass({
     Position.timestamp Read only
     Returns a DOMTimeStamp representing the time at which the location was retrieved.
     */
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
-    var locations = this.props.scheduleData.links.locations
-      .map(function(loc) {
-        loc.distanceMiles = GeocodeDistance.calc(
-          lat, lon,
-          loc.latitude, loc.longitude,
-          GeocodeDistance.EarthRadiusInMiles);
-        loc.distanceKilometers = GeocodeDistance.calc(
-          lat, lon,
-          loc.latitude, loc.longitude,
-          GeocodeDistance.EarthRadiusInKilometers);
-        return loc;
-      });
-    var sortedLocations = locations.sort(function(a, b) {
-      if (a.distanceMiles === b.distanceMiles) { return 0; }
-      return a.distanceMiles < b.distanceMiles ? -1 : 1;
+    this.setState({
+      foundPosition: true,
+      locationsByDistance: this.sortLocationsByDistance(
+        position, this.props.scheduleData.links.locations)
     });
-    console.dir(position);
-    console.dir(sortedLocations);
+  },
+
+  sortLocationsByDistance: function(position, locations) {
+    var locationsWithDistances = locations.map(function(location) {
+      var distances = this.calcDistances(position.coords, location);
+      return immutableUpdate(location, {$merge: distances});
+    }, this);
+    var sortedLocations = locationsWithDistances.sort(function(a, b) {
+      if (a.distanceKm === b.distanceKm) { return 0; }
+      return a.distanceKm < b.distanceKm ? -1 : 1;
+    });
+    return sortedLocations;
+  },
+
+  calcDistances: function(coords1, coords2) {
+    var distances = {};
+    distances.distanceMiles = GeocodeDistance.calc(
+      coords1.latitude, coords1.longitude,
+      coords2.latitude, coords2.longitude,
+      GeocodeDistance.EarthRadiusInMiles).toPrecision(2);
+    distances.distanceKm = GeocodeDistance.calc(
+      coords1.latitude, coords1.longitude,
+      coords2.latitude, coords2.longitude,
+      GeocodeDistance.EarthRadiusInKilometers).toPrecision(2);
+    return distances;
   }
 
 });

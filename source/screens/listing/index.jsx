@@ -10,6 +10,21 @@ var Journey = require('./journey');
 
 var Listing = React.createClass({
   mixins: [ RouterState, Navigation ],
+
+  propTypes: {
+    scheduleData: React.PropTypes.object.isRequired,
+    foundPosition: React.PropTypes.bool,
+    locationsByDistance: React.PropTypes.array
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.foundPosition && !this.props.foundPosition) {
+      this.replaceWith('listing', this.getParams(), {
+        'location': this.getQuery()['location'],
+        'location-name': nextProps.locationsByDistance[0].id
+      });
+    }
+  },
   
   render: function() {
     var locationName = this.getQuery()['location-name'];
@@ -41,6 +56,13 @@ var Listing = React.createClass({
           <tr>
             <th colSpan='2'>
               <input ref="searchByName" type="search" className="form-input" placeholder="Search by Location" onChange={this.searchByLocation} value={locationName} />
+              <div className='detail'>
+                { this.props.foundPosition ? 
+                    this.props.locationsByDistance[0].distanceMiles
+                      +' miles from '
+                      + this.props.locationsByDistance[0].id: 
+                    'Current Position Unknown' }
+              </div>
             </th>
           </tr>
         </thead>

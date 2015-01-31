@@ -131,11 +131,19 @@
 	var Router = __webpack_require__(3);
 	var RouteHandler = Router.RouteHandler;
 	var RouteHandlerKey = __webpack_require__(25);
+	var immutableUpdate = React.addons.update;
 
 	var GeocodeDistance = __webpack_require__(301);
 
 	var App = React.createClass({displayName: "App",
 	  mixins: [RouteHandlerKey],
+
+	  getInitialState: function() {
+	    return {
+	      foundPosition: false,
+	      locationsByDistance: []
+	    };
+	  },
 
 	  componentDidMount: function() {
 	    this.findPosition();
@@ -145,6 +153,8 @@
 	    return React.createElement("div", {className: "ferry-schedule-app"}, 
 	      React.createElement(RouteHandler, {
 	        scheduleData: this.props.scheduleData, 
+	        foundPosition: this.state.foundPosition, 
+	        locationsByDistance: this.state.locationsByDistance, 
 	        key: this.routeHandlerKey(), 
 	        routerState: this.props.routerState})
 	    );
@@ -167,26 +177,36 @@
 	    Position.timestamp Read only
 	    Returns a DOMTimeStamp representing the time at which the location was retrieved.
 	    */
-	    var lat = position.coords.latitude;
-	    var lon = position.coords.longitude;
-	    var locations = this.props.scheduleData.links.locations
-	      .map(function(loc) {
-	        loc.distanceMiles = GeocodeDistance.calc(
-	          lat, lon,
-	          loc.latitude, loc.longitude,
-	          GeocodeDistance.EarthRadiusInMiles);
-	        loc.distanceKilometers = GeocodeDistance.calc(
-	          lat, lon,
-	          loc.latitude, loc.longitude,
-	          GeocodeDistance.EarthRadiusInKilometers);
-	        return loc;
-	      });
-	    var sortedLocations = locations.sort(function(a, b) {
-	      if (a.distanceMiles === b.distanceMiles) { return 0; }
-	      return a.distanceMiles < b.distanceMiles ? -1 : 1;
+	    this.setState({
+	      foundPosition: true,
+	      locationsByDistance: this.sortLocationsByDistance(
+	        position, this.props.scheduleData.links.locations)
 	    });
-	    console.dir(position);
-	    console.dir(sortedLocations);
+	  },
+
+	  sortLocationsByDistance: function(position, locations) {
+	    var locationsWithDistances = locations.map(function(location) {
+	      var distances = this.calcDistances(position.coords, location);
+	      return immutableUpdate(location, {$merge: distances});
+	    }, this);
+	    var sortedLocations = locationsWithDistances.sort(function(a, b) {
+	      if (a.distanceKm === b.distanceKm) { return 0; }
+	      return a.distanceKm < b.distanceKm ? -1 : 1;
+	    });
+	    return sortedLocations;
+	  },
+
+	  calcDistances: function(coords1, coords2) {
+	    var distances = {};
+	    distances.distanceMiles = GeocodeDistance.calc(
+	      coords1.latitude, coords1.longitude,
+	      coords2.latitude, coords2.longitude,
+	      GeocodeDistance.EarthRadiusInMiles).toPrecision(2);
+	    distances.distanceKm = GeocodeDistance.calc(
+	      coords1.latitude, coords1.longitude,
+	      coords2.latitude, coords2.longitude,
+	      GeocodeDistance.EarthRadiusInKilometers).toPrecision(2);
+	    return distances;
 	  }
 
 	});
@@ -210,6 +230,21 @@
 
 	var Listing = React.createClass({displayName: "Listing",
 	  mixins: [ RouterState, Navigation ],
+
+	  propTypes: {
+	    scheduleData: React.PropTypes.object.isRequired,
+	    foundPosition: React.PropTypes.bool,
+	    locationsByDistance: React.PropTypes.array
+	  },
+
+	  componentWillReceiveProps: function(nextProps) {
+	    if (nextProps.foundPosition && !this.props.foundPosition) {
+	      this.replaceWith('listing', this.getParams(), {
+	        'location': this.getQuery()['location'],
+	        'location-name': nextProps.locationsByDistance[0].id
+	      });
+	    }
+	  },
 	  
 	  render: function() {
 	    var locationName = this.getQuery()['location-name'];
@@ -240,7 +275,14 @@
 	          ), 
 	          React.createElement("tr", null, 
 	            React.createElement("th", {colSpan: "2"}, 
-	              React.createElement("input", {ref: "searchByName", type: "search", className: "form-input", placeholder: "Search by Location", onChange: this.searchByLocation, value: locationName})
+	              React.createElement("input", {ref: "searchByName", type: "search", className: "form-input", placeholder: "Search by Location", onChange: this.searchByLocation, value: locationName}), 
+	              React.createElement("div", {className: "detail"}, 
+	                 this.props.foundPosition ? 
+	                    this.props.locationsByDistance[0].distanceMiles
+	                      +' miles from '
+	                      + this.props.locationsByDistance[0].id: 
+	                    'Current Position Unknown'
+	              )
 	            )
 	          )
 	        ), 
