@@ -21,7 +21,7 @@ var Listing = React.createClass({
     if (nextProps.foundPosition && !this.props.foundPosition) {
       this.replaceWith('listing', this.getParams(), {
         'location': this.getQuery()['location'],
-        'location-name': nextProps.locationsByDistance[0].id
+        'location-name': nextProps.locationsByDistance[0].name
       });
     }
   },
@@ -60,7 +60,7 @@ var Listing = React.createClass({
                 { this.props.foundPosition ? 
                     this.props.locationsByDistance[0].distanceMiles
                       +' miles from '
-                      + this.props.locationsByDistance[0].id: 
+                      + this.props.locationsByDistance[0].name: 
                     'Current Position Unknown' }
               </div>
             </th>
@@ -78,36 +78,47 @@ var Listing = React.createClass({
       return;
     }
 
+    var byArrival = this.getQuery()['location'] === 'by-arrival';
+
     // map Ferry Routes by their ID, to join with Journeys
     var routes = {};
-    scheduleData.links.routes.forEach(function(route) {
+    scheduleData.linked.routes.forEach(function(route) {
       routes[route.id] = route;
     });
 
-    var locationName = this.getQuery()['location-name']
-    if (locationName !== undefined && locationName !== '') {
-      locationName = locationName.toLowerCase();
+    // map Location by their ID, to join with Routes
+    var locations = {}
+    scheduleData.linked.locations.forEach(function(location) {
+      locations[location.id] = location;
+    });
+
+    var locationQuery = this.getQuery()['location-name']
+    if (locationQuery !== undefined && locationQuery !== '') {
+      locationQuery = locationQuery.toLowerCase();
     }
 
     var timeFormat = 'HH:mm a';
     var journeys = [];
     scheduleData.journeys.forEach(function(journey) {
-      var route = routes[journey.linked.route];
+      var route = routes[journey.links.route.id];
       var location;
+      var location2;
       var time;
 
       if (this.getQuery()['location']==='by-arrival') {
-        location = route.destination;
+        location = locations[route.links.destination.id];
         time = moment(journey.arrive, timeFormat);
+        location2 = locations[route.links.origin.id];
       } else {
-        location = route.origin;
+        location = locations[route.links.origin.id];
         time = moment(journey.depart, timeFormat);
+        location2 = locations[route.links.destination.id];
       }
 
       var shouldDisplayJourney = 
-        locationName === undefined || 
-        locationName === '' || 
-        location.toLowerCase().indexOf(locationName) >= 0;
+        locationQuery === undefined || 
+        locationQuery === '' || 
+        location.name.toLowerCase().indexOf(locationQuery) >= 0;
 
       if (shouldDisplayJourney) {
         journeys.push(
@@ -116,7 +127,9 @@ var Listing = React.createClass({
             journey={journey}
             route={route}
             location={location} 
-            time={time} />
+            time={time}
+            byArrival={byArrival}
+            location2={location2}  />
         );
       }
 

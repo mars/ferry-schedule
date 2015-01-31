@@ -3,10 +3,16 @@ var React = require('react/addons');
 var Journey = React.createClass({
 
   propTypes: {
-    location: React.PropTypes.string.isRequired,
+    location: React.PropTypes.object.isRequired,
     time: React.PropTypes.object.isRequired,
-    route: React.PropTypes.object.isRequired,
-    journey: React.PropTypes.object.isRequired
+    isArrival: React.PropTypes.bool,
+    location2: React.PropTypes.object.isRequired
+  },
+
+  getDefaultProps: function() {
+    return {
+      isArrival: false
+    };
   },
   
   render: function() {
@@ -15,19 +21,19 @@ var Journey = React.createClass({
     };
 
     var locationDesc;
-    if (this.props.location === this.props.route.origin) {
+    if (!this.props.isArrival) {
       locationDesc = <div>
-        {this.props.location}
+        {this.props.location.name}
         <div className='detail'>
-          {' → ' + this.props.route.destination}
+          {' → ' + this.props.location2.name}
         </div>
       </div>;
     } else {
       locationDesc = <div>
         <div className='detail'>
-          {this.props.route.origin + ' → '}
+          {this.props.location2.name + ' → '}
         </div>
-        {this.props.location}
+        {this.props.location.name}
       </div>;
     }
 

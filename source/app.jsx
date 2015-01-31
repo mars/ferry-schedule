@@ -51,7 +51,7 @@ var App = React.createClass({
     this.setState({
       foundPosition: true,
       locationsByDistance: this.sortLocationsByDistance(
-        position, this.props.scheduleData.links.locations)
+        position, this.props.scheduleData.linked.locations)
     });
   },
 
