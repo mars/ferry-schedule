@@ -32,6 +32,7 @@ var App = React.createClass({
   },
 
   findPosition: function() {
+    // Will not geolocate on server; only available in browser.
     navigator &&
       navigator.geolocation &&
         navigator.geolocation.getCurrentPosition(this.foundPosition);
