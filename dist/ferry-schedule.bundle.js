@@ -247,7 +247,7 @@
 	  },
 	  
 	  render: function() {
-	    var locationName = this.getQuery()['location-name'];
+	    var locationQuery = this.getQuery()['location-name'];
 
 	    var tableStyle = {};
 	    var cx = React.addons.classSet;
@@ -260,14 +260,14 @@
 	          React.createElement("tr", null, 
 	            React.createElement("th", {colSpan: "2"}, 
 	              React.createElement(Link, {to: "listing", 
-	                query: { 'location-name': locationName}, 
+	                query: { 'location-name': locationQuery}, 
 	                className: currentWhenNotByArrival, 
 	                activeClassName: "query-is-empty"}, 
 	                "Departures"
 	              ), 
 	              ' → ', 
 	              React.createElement(Link, {to: "listing", 
-	                query: { location: 'by-arrival', 'location-name': locationName}, 
+	                query: { location: 'by-arrival', 'location-name': locationQuery}, 
 	                activeClassName: "current"}, 
 	                "Arrivals"
 	              )
@@ -275,7 +275,7 @@
 	          ), 
 	          React.createElement("tr", null, 
 	            React.createElement("th", {colSpan: "2"}, 
-	              React.createElement("input", {ref: "searchByName", type: "search", className: "form-input", placeholder: "Search by Location", onChange: this.searchByLocation, value: locationName}), 
+	              this.renderLocationSelect(), 
 	              React.createElement("div", {className: "detail"}, 
 	                 this.props.foundPosition ? 
 	                    this.props.locationsByDistance[0].distanceMiles
@@ -290,6 +290,24 @@
 	          this.renderJourneys(this.props.scheduleData)
 	        )
 	      )
+	    );
+	  },
+
+	  renderLocationSelect: function() {
+	    var locations = this.props.scheduleData.linked.locations;
+	    var locationQuery = this.getQuery()['location-name'];
+	    var options = locations.map(function(location) {
+	      return React.createElement("option", {
+	        value: location.name.toLowerCase(), 
+	        key: 'location-select-'+location.id}, 
+	        location.name
+	      );
+	    });
+	    return React.createElement("select", {
+	      onChange: this.searchByLocation, 
+	      value: locationQuery.toLowerCase()}, 
+	      React.createElement("option", {value: "", key: "location-select-all"}, "All"), 
+	      options
 	    );
 	  },
 
@@ -348,7 +366,7 @@
 	            route: route, 
 	            location: location, 
 	            time: time, 
-	            byArrival: byArrival, 
+	            isArrival: byArrival, 
 	            location2: location2})
 	        );
 	      }
@@ -2036,7 +2054,7 @@
 	  propTypes: {
 	    location: React.PropTypes.object.isRequired,
 	    time: React.PropTypes.object.isRequired,
-	    isArrival: React.PropTypes.bool,
+	    isArrival: React.PropTypes.bool.isRequired,
 	    location2: React.PropTypes.object.isRequired
 	  },
 

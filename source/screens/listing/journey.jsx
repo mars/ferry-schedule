@@ -5,7 +5,7 @@ var Journey = React.createClass({
   propTypes: {
     location: React.PropTypes.object.isRequired,
     time: React.PropTypes.object.isRequired,
-    isArrival: React.PropTypes.bool,
+    isArrival: React.PropTypes.bool.isRequired,
     location2: React.PropTypes.object.isRequired
   },
 

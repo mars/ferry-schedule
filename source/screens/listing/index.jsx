@@ -27,7 +27,7 @@ var Listing = React.createClass({
   },
   
   render: function() {
-    var locationName = this.getQuery()['location-name'];
+    var locationQuery = this.getQuery()['location-name'];
 
     var tableStyle = {};
     var cx = React.addons.classSet;
@@ -40,14 +40,14 @@ var Listing = React.createClass({
           <tr>
             <th colSpan='2'>
               <Link to='listing'
-                query={{ 'location-name': locationName }}
+                query={{ 'location-name': locationQuery }}
                 className={currentWhenNotByArrival}
                 activeClassName='query-is-empty'>
                 Departures
               </Link>
               {' → '}
               <Link to='listing'
-                query={{ location: 'by-arrival', 'location-name': locationName }}
+                query={{ location: 'by-arrival', 'location-name': locationQuery }}
                 activeClassName='current'>
                 Arrivals
               </Link>
@@ -55,7 +55,7 @@ var Listing = React.createClass({
           </tr>
           <tr>
             <th colSpan='2'>
-              <input ref="searchByName" type="search" className="form-input" placeholder="Search by Location" onChange={this.searchByLocation} value={locationName} />
+              {this.renderLocationSelect()}
               <div className='detail'>
                 { this.props.foundPosition ? 
                     this.props.locationsByDistance[0].distanceMiles
@@ -71,6 +71,24 @@ var Listing = React.createClass({
         </tbody>
       </table>
     </div>;
+  },
+
+  renderLocationSelect: function() {
+    var locations = this.props.scheduleData.linked.locations;
+    var locationQuery = this.getQuery()['location-name'];
+    var options = locations.map(function(location) {
+      return <option 
+        value={location.name.toLowerCase()} 
+        key={'location-select-'+location.id}>
+        {location.name}
+      </option>;
+    });
+    return <select
+      onChange={this.searchByLocation}
+      value={locationQuery.toLowerCase()}>
+      <option value='' key='location-select-all'>All</option>
+      {options}
+    </select>;
   },
 
   renderJourneys: function(scheduleData) {
@@ -128,7 +146,7 @@ var Listing = React.createClass({
             route={route}
             location={location} 
             time={time}
-            byArrival={byArrival}
+            isArrival={byArrival}
             location2={location2}  />
         );
       }
