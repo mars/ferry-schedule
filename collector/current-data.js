@@ -173,7 +173,7 @@ module.exports = {
   linked: {
     routes: [{
       id: 'tiburon-sf-ferry-bldg',
-      days: 'weekdays',
+      days: 'weekday',
       qualifier: 'Effective October 27, 2014 - April 26, 2015',
       links: {
         origin: { type: 'location', id: 'tiburon' },
@@ -181,7 +181,7 @@ module.exports = {
       }
     },{
       id: 'sf-ferry-bldg-tiburon',
-      days: 'weekdays',
+      days: 'weekday',
       qualifier: 'Effective October 27, 2014 - April 26, 2015',
       links: {
         origin: { type: 'location', id: 'sf-ferry-bldg' },
@@ -189,7 +189,7 @@ module.exports = {
       }
     },{
       id: 'tiburon-sf-pier-41',
-      days: 'weekdays',
+      days: 'weekday',
       qualifier: 'Effective October 27, 2014 - April 26, 2015',
       links: {
         origin: { type: 'location', id: 'tiburon' },
@@ -197,7 +197,7 @@ module.exports = {
       }
     },{
       id: 'sf-pier-41-tiburon',
-      days: 'weekdays',
+      days: 'weekday',
       qualifier: 'Effective October 27, 2014 - April 26, 2015',
       links: {
         origin: { type: 'location', id: 'sf-pier-41' },

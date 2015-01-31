@@ -7,7 +7,10 @@ React.initializeTouchEvents(true);
 document.addEventListener("DOMContentLoaded", function(event) {
 
   Router.run(routes, Router.HistoryLocation, function(Handler, state) {
-    React.render(<Handler scheduleData={window.scheduleData} routerState={state} />, document.querySelector(".react-app"));
+    React.render(<Handler
+      scheduleData={window.scheduleData}
+      routerState={state}
+      runningInBrowser={true} />, document.querySelector(".react-app"));
   });
 
 });

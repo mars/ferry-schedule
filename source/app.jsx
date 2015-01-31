@@ -26,16 +26,18 @@ var App = React.createClass({
         scheduleData={this.props.scheduleData}
         foundPosition={this.state.foundPosition}
         locationsByDistance={this.state.locationsByDistance}
+        runningInBrowser={this.props.runningInBrowser}
         key={this.routeHandlerKey()} 
         routerState={this.props.routerState} />
     </div>;
   },
 
   findPosition: function() {
-    // Will not geolocate on server; only available in browser.
-    navigator &&
-      navigator.geolocation &&
-        navigator.geolocation.getCurrentPosition(this.foundPosition);
+    if (this.props.runningInBrowser) {
+      navigator &&
+        navigator.geolocation &&
+          navigator.geolocation.getCurrentPosition(this.foundPosition);
+    }
   },
 
   foundPosition: function(position) {
