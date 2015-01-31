@@ -30,6 +30,7 @@ var Listing = React.createClass({
                 activeClassName='query-is-empty'>
                 Departures
               </Link>
+              {' → '}
               <Link to='listing'
                 query={{ location: 'by-arrival', 'location-name': locationName }}
                 activeClassName='current'>
