@@ -396,15 +396,18 @@
 	      var location;
 	      var location2;
 	      var time;
+	      var time2;
 
 	      if (this.getQuery()['location-filter']==='by-arrival') {
 	        location = locations[route.links.destination.id];
 	        time = moment(journey.arrive, timeFormat);
 	        location2 = locations[route.links.origin.id];
+	        time2 = moment(journey.depart, timeFormat);
 	      } else {
 	        location = locations[route.links.origin.id];
 	        time = moment(journey.depart, timeFormat);
 	        location2 = locations[route.links.destination.id];
+	        time2 = moment(journey.arrive, timeFormat);
 	      }
 
 	      var shouldDisplayJourney = 
@@ -427,7 +430,8 @@
 	            location: location, 
 	            time: time, 
 	            isArrival: byArrival, 
-	            location2: location2})
+	            location2: location2, 
+	            time2: time2})
 	        );
 	      }
 
@@ -26258,7 +26262,8 @@
 	    location: React.PropTypes.object.isRequired,
 	    time: React.PropTypes.object.isRequired,
 	    isArrival: React.PropTypes.bool.isRequired,
-	    location2: React.PropTypes.object.isRequired
+	    location2: React.PropTypes.object.isRequired,
+	    time2: React.PropTypes.object.isRequired
 	  },
 
 	  getDefaultProps: function() {
@@ -26289,9 +26294,28 @@
 	      );
 	    }
 
+	    var timeDesc;
+	    var time = this.props.time.format('h:mm a');
+	    var time2 = this.props.time2.format('h:mm a');
+	    if (!this.props.isArrival) {
+	      timeDesc = React.createElement("div", null, 
+	        time, 
+	        React.createElement("div", {className: "detail"}, 
+	          ' → ' + time2
+	        )
+	      );
+	    } else {
+	      timeDesc = React.createElement("div", null, 
+	        React.createElement("div", {className: "detail"}, 
+	          time2 + ' → '
+	        ), 
+	        time
+	      );
+	    }
+
 	    return React.createElement("tr", null, 
 	      React.createElement("td", null, locationDesc), 
-	      React.createElement("td", {style: timeStyle}, this.props.time.format('h:mm a'))
+	      React.createElement("td", {style: timeStyle}, timeDesc)
 	    );
 	  }
 

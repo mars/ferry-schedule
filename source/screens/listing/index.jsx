@@ -170,15 +170,18 @@ var Listing = React.createClass({
       var location;
       var location2;
       var time;
+      var time2;
 
       if (this.getQuery()['location-filter']==='by-arrival') {
         location = locations[route.links.destination.id];
         time = moment(journey.arrive, timeFormat);
         location2 = locations[route.links.origin.id];
+        time2 = moment(journey.depart, timeFormat);
       } else {
         location = locations[route.links.origin.id];
         time = moment(journey.depart, timeFormat);
         location2 = locations[route.links.destination.id];
+        time2 = moment(journey.arrive, timeFormat);
       }
 
       var shouldDisplayJourney = 
@@ -201,7 +204,8 @@ var Listing = React.createClass({
             location={location} 
             time={time}
             isArrival={byArrival}
-            location2={location2}  />
+            location2={location2}
+            time2={time2}  />
         );
       }
 

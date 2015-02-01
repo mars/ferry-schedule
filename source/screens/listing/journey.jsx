@@ -6,7 +6,8 @@ var Journey = React.createClass({
     location: React.PropTypes.object.isRequired,
     time: React.PropTypes.object.isRequired,
     isArrival: React.PropTypes.bool.isRequired,
-    location2: React.PropTypes.object.isRequired
+    location2: React.PropTypes.object.isRequired,
+    time2: React.PropTypes.object.isRequired
   },
 
   getDefaultProps: function() {
@@ -37,9 +38,28 @@ var Journey = React.createClass({
       </div>;
     }
 
+    var timeDesc;
+    var time = this.props.time.format('h:mm a');
+    var time2 = this.props.time2.format('h:mm a');
+    if (!this.props.isArrival) {
+      timeDesc = <div>
+        {time}
+        <div className='detail'>
+          {' → ' + time2}
+        </div>
+      </div>;
+    } else {
+      timeDesc = <div>
+        <div className='detail'>
+          {time2 + ' → '}
+        </div>
+        {time}
+      </div>;
+    }
+
     return <tr>
       <td>{locationDesc}</td>
-      <td style={timeStyle}>{this.props.time.format('h:mm a')}</td>
+      <td style={timeStyle}>{timeDesc}</td>
     </tr>;
   }
 
