@@ -385,6 +385,8 @@
 	    var timeQuery = this.getQuery()['time']
 	    if (timeQuery !== undefined && timeQuery !== '') {
 	      timeQuery = timeQuery.toLowerCase();
+	    } else {
+	      timeQuery = 'weekday';
 	    }
 
 	    var timeFormat = 'HH:mm a';
@@ -407,12 +409,12 @@
 
 	      var shouldDisplayJourney = 
 	        (
+	          // missing location query shows all
 	          locationQuery === undefined || 
 	          locationQuery === '' || 
 	          location.id.toLowerCase() === locationQuery
 	        ) && (
-	          timeQuery === undefined || 
-	          timeQuery === '' || 
+	          // time query must always match
 	          journey.days.toLowerCase() === timeQuery
 	        );
 
