@@ -411,7 +411,7 @@
 	        ) && (
 	          timeQuery === undefined || 
 	          timeQuery === '' || 
-	          route.days.toLowerCase() === timeQuery
+	          journey.days.toLowerCase() === timeQuery
 	        );
 
 	      if (shouldDisplayJourney) {
