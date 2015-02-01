@@ -281,14 +281,16 @@
 	          React.createElement("tr", null, 
 	            React.createElement("th", {colSpan: "2"}, 
 	              React.createElement(Link, {to: "listing", 
-	                query: { 'location-name': locationQuery}, 
+	                query: immutableUpdate(
+	                  this.getQuery(), {$merge: {'location-filter': null} }), 
 	                className: currentWhenNotByArrival, 
 	                activeClassName: "query-is-empty"}, 
 	                "Departures"
 	              ), 
 	              ' → ', 
 	              React.createElement(Link, {to: "listing", 
-	                query: { 'location-filter': 'by-arrival', 'location-name': locationQuery}, 
+	                query: immutableUpdate(
+	                  this.getQuery(), {$merge: {'location-filter': 'by-arrival'} }), 
 	                activeClassName: "current"}, 
 	                "Arrivals"
 	              )

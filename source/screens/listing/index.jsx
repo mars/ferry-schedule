@@ -55,14 +55,16 @@ var Listing = React.createClass({
           <tr>
             <th colSpan='2'>
               <Link to='listing'
-                query={{ 'location-name': locationQuery }}
+                query={immutableUpdate(
+                  this.getQuery(), {$merge: {'location-filter': null} })}
                 className={currentWhenNotByArrival}
                 activeClassName='query-is-empty'>
                 Departures
               </Link>
               {' → '}
               <Link to='listing'
-                query={{ 'location-filter': 'by-arrival', 'location-name': locationQuery }}
+                query={immutableUpdate(
+                  this.getQuery(), {$merge: {'location-filter': 'by-arrival'} })}
                 activeClassName='current'>
                 Arrivals
               </Link>
