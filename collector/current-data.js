@@ -216,6 +216,78 @@ module.exports = {
     depart: '4:10 pm',
     arrive: '4:50 pm',
     qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'tiburon-sf-pier-41' }
+    },
+    id: 'tsp41we01',
+    days: 'weekend',
+    depart: '10:30 am',
+    arrive: '11:20 am',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'tiburon-sf-pier-41' }
+    },
+    id: 'tsp41we02',
+    days: 'weekend',
+    depart: '12:40 pm',
+    arrive: '1:05 pm',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'tiburon-sf-pier-41' }
+    },
+    id: 'tsp41we03',
+    days: 'weekend',
+    depart: '2:35 pm',
+    arrive: '3:25 pm',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'tiburon-sf-pier-41' }
+    },
+    id: 'tsp41we04',
+    days: 'weekend',
+    depart: '4:35 pm',
+    arrive: '5:20 pm',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'sf-pier-41-tiburon' }
+    },
+    id: 'sp41twe01',
+    days: 'weekend',
+    depart: '9:45 am',
+    arrive: '10:25 am',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'sf-pier-41-tiburon' }
+    },
+    id: 'sp41twe02',
+    days: 'weekend',
+    depart: '11:35 am',
+    arrive: '12:30 pm',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'sf-pier-41-tiburon' }
+    },
+    id: 'sp41twe03',
+    days: 'weekend',
+    depart: '2:05 pm',
+    arrive: '2:30 pm',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
+  },{
+    links: {
+      route: { id: 'sf-pier-41-tiburon' }
+    },
+    id: 'sp41twe04',
+    days: 'weekend',
+    depart: '3:35pm',
+    arrive: '4:25pm',
+    qualifier: 'Effective October 27, 2014 - April 26, 2015'
   }],
 
   linked: {
