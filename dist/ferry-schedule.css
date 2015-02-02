@@ -17,27 +17,49 @@ a:active {
   color: #fff;
 }
 
-.active,
-.journey-filters .current {
+.active {
   font-weight: bold;
   color: #fff;
 }
 
 .detail {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: normal;
   color: #999;
+}
+
+.help {
+  font-size: 10px;
+  font-weight: normal;
+  color: #999;
+}
+
+.flush-right {
+  text-align: right;
+}
+
+.masthead {
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.filters,
+.help {
+  text-align: center;
 }
 
 table {
   border-collapse: collapse;
   width: 100%;
-  margin: 18px 0 0 0;
+  margin-top: 16px;
 }
 
 th {
   font-size: 24px;
-  padding: 0 0 12px 0;
+  padding: 0 8px 16px 8px;
+  text-align: left;
 }
 
 td {

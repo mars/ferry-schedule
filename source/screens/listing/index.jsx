@@ -50,32 +50,28 @@ var Listing = React.createClass({
     var currentWhenNotByArrival = cx({ current: !byArrival });
 
     return <div className='schedule-listing'>
+      <h1 className="masthead">Tiburon-San Francisco Ferry Schedules</h1>
+      <div className='filters'>
+        <span className='detail'>From </span>{this.renderLocationSelect()}
+        <span className='detail'> on a </span>{this.renderTimeSelect()}
+      </div>
+
+      <div key='geolocation-details' className='help'>
+        { this.props.foundPosition ? 
+            this.props.locationsByDistance[0].distanceMiles
+              +' miles from '
+              + this.props.locationsByDistance[0].name: 
+            'Current Position Unknown' }
+      </div>
+
       <table style={tableStyle}>
-        <thead className='journey-filters'>
-          <tr>
-            <th colSpan='2'>
-              <Link to='listing'
-                query={immutableUpdate(
-                  this.getQuery(), {$merge: {'location-filter': null} })}
-                className={currentWhenNotByArrival}
-                activeClassName='query-is-empty'>
-                Departures
-              </Link>
-              {' → '}
-              <Link to='listing'
-                query={immutableUpdate(
-                  this.getQuery(), {$merge: {'location-filter': 'by-arrival'} })}
-                activeClassName='current'>
-                Arrivals
-              </Link>
-            </th>
-          </tr>
+        <thead>
           <tr>
             <th>
-              {this.renderLocationSelect()}
+              Origin
             </th>
-            <th>
-              {this.renderTimeSelect()}
+            <th className='flush-right'>
+              Destination
             </th>
           </tr>
         </thead>
@@ -96,40 +92,26 @@ var Listing = React.createClass({
         {location.name}
       </option>;
     });
-    return [
-      <select key='location-select'
-        onChange={this.searchByLocation}
-        value={locationQuery.toLowerCase()}>
-        <option value='' key='location-select-all'>All</option>
-        {options}
-      </select>,
-      <div key='location-select-details' className='detail'>
-        { this.props.foundPosition ? 
-            this.props.locationsByDistance[0].distanceMiles
-              +' miles from '
-              + this.props.locationsByDistance[0].name: 
-            'Current Position Unknown' }
-      </div>
-    ];
+    return <select key='location-select'
+      onChange={this.searchByLocation}
+      value={locationQuery.toLowerCase()}>
+      <option value='' key='location-select-all'>All</option>
+      {options}
+    </select>;
   },
 
   renderTimeSelect: function() {
     var timeQuery = this.getQuery()['time'] || '';
-    return [
-      <select key='time-select'
-        onChange={this.searchByTime}
-        value={timeQuery.toLowerCase()}>
-        <option value='weekday' key='time-select-weekday'>
-          Weekday
-        </option>
-        <option value='weekend' key='time-select-weekend'>
-          Weekend
-        </option>
-      </select>,
-      <div key='time-select-detail' className='detail'>
-        Routes vary by day
-      </div>
-    ];
+    return <select key='time-select'
+      onChange={this.searchByTime}
+      value={timeQuery.toLowerCase()}>
+      <option value='weekday' key='time-select-weekday'>
+        Weekday
+      </option>
+      <option value='weekend' key='time-select-weekend'>
+        Weekend
+      </option>
+    </select>;
   },
 
   renderJourneys: function(scheduleData) {

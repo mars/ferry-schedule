@@ -21,45 +21,26 @@ var Journey = React.createClass({
       textAlign: 'right'
     };
 
-    var locationDesc;
-    if (!this.props.isArrival) {
-      locationDesc = <div>
-        {this.props.location.name}
-        <div className='detail'>
-          {' → ' + this.props.location2.name}
-        </div>
-      </div>;
-    } else {
-      locationDesc = <div>
-        <div className='detail'>
-          {this.props.location2.name + ' → '}
-        </div>
-        {this.props.location.name}
-      </div>;
-    }
-
-    var timeDesc;
     var time = this.props.time.format('h:mm a');
     var time2 = this.props.time2.format('h:mm a');
-    if (!this.props.isArrival) {
-      timeDesc = <div>
-        {time}
-        <div className='detail'>
-          {' → ' + time2}
-        </div>
-      </div>;
-    } else {
-      timeDesc = <div>
-        <div className='detail'>
-          {time2 + ' → '}
-        </div>
-        {time}
-      </div>;
-    }
+
+    var originDesc = <div>
+      <div className='detail'>
+        {this.props.location.name}
+      </div>
+      {time}
+    </div>;
+
+    var destinationDesc = <div>
+      <div className='detail'>
+        {this.props.location2.name}
+      </div>
+      {time2}
+    </div>;
 
     return <tr>
-      <td>{locationDesc}</td>
-      <td style={timeStyle}>{timeDesc}</td>
+      <td>{originDesc}</td>
+      <td className='flush-right'>{destinationDesc}</td>
     </tr>;
   }
 
