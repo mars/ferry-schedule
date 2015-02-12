@@ -7,10 +7,12 @@ var Redirect = Router.Redirect;
 
 var App = require('./app');
 var Listing = require('./screens/listing');
+var Map = require('./screens/map');
 
 var routes = (
   <Route handler={App}>
-    <DefaultRoute name="listing" handler={Listing} />
+    <DefaultRoute name="map" handler={Map} />
+    <Route name="listing" handler={Listing} />
   </Route>
 );
 
