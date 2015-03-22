@@ -349,11 +349,11 @@ var Map = React.createClass({
         <polyline data-ferry-route="sausalito tiburon" points="111.667,198.5 129.167,198.5 135.417,192.25  "/>
         <polyline data-ferry-route="tiburon sf-ferry-bldg" points="155.167,192 245.667,282.5 245.667,323   "/>
         <polyline data-ferry-route="tiburon sf-pier-41" points="151.167,196 211.417,256.25 211.417,302  "/>
-        <circle data-ferry-stop="larkspur" cx="69.167" cy="39" r="12.5" onClick={this.selectStop}/>
-        <circle data-ferry-stop="tiburon" cx="144.667" cy="183.5" r="12.5" onClick={this.selectStop}/>
-        <circle data-ferry-stop="sausalito" cx="99.167" cy="204" r="12.5" onClick={this.selectStop}/>
-        <circle data-ferry-stop="sf-pier-41" cx="209.167" cy="313" r="12.5" onClick={this.selectStop}/>
-        <circle data-ferry-stop="sf-ferry-bldg" cx="251.667" cy="334" r="12.5" onClick={this.selectStop}/>
+        <circle data-ferry-stop="larkspur" cx="69.167" cy="39" r="12.5"/>
+        <circle data-ferry-stop="tiburon" cx="144.667" cy="183.5" r="12.5" onClick={this.selectStop} onTouchEnd={this.selectStop}/>
+        <circle data-ferry-stop="sausalito" cx="99.167" cy="204" r="12.5"/>
+        <circle data-ferry-stop="sf-pier-41" cx="209.167" cy="313" r="12.5" onClick={this.selectStop} onTouchEnd={this.selectStop}/>
+        <circle data-ferry-stop="sf-ferry-bldg" cx="251.667" cy="334" r="12.5" onClick={this.selectStop} onTouchEnd={this.selectStop}/>
       </g>
       </svg>
     </div>;
