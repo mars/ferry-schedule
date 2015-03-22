@@ -35,7 +35,10 @@ server.on('request', function(request, response) {
   // }
 
   // Ideally this would match for existing React routes.
-  if (parsedURL.pathname === '/') {
+  var pathName = parsedURL.pathname;
+  if (pathName === '/' ||
+      pathName === '/listing' ||
+      pathName === '/map') {
 
     Router.run(routes, request.url, function(Handler, state) {
 

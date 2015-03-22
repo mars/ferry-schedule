@@ -31,7 +31,9 @@ var Listing = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (nextProps.foundPosition && !this.props.foundPosition) {
+    var locationQuery = this.getQuery()['location-name'];
+    var hasLocationQuery = locationQuery != null && locationQuery !== '';
+    if (nextProps.foundPosition && !this.props.foundPosition && !hasLocationQuery) {
       var originalQuery = this.getQuery();
       var nearestLocation = nextProps.locationsByDistance[0].id;
       var queryForNearestLocation = immutableUpdate(originalQuery, {$merge: {
@@ -52,8 +54,7 @@ var Listing = React.createClass({
     return <div className='schedule-listing'>
       <h1 className="masthead">Tiburon-San Francisco Ferry Schedules</h1>
       <div className='filters'>
-        <span className='detail'>From </span>{this.renderLocationSelect()}
-        <span className='detail'> on a </span>{this.renderTimeSelect()}
+        <span className='detail'>Schedule </span>{this.renderTimeSelect()}
       </div>
 
       <div key='geolocation-details' className='help'>
@@ -203,7 +204,10 @@ var Listing = React.createClass({
       }
     });
 
-    return sortedJourneys;
+    return sortedJourneys.length === 0 ? [
+      <td key='none-origin'><span className='detail'>None</span></td>,
+      <td key='none-destination' className='flush-right'><span className='detail'>None</span></td>
+    ] : sortedJourneys;
   },
 
   searchByLocation: function(event) {
