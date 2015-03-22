@@ -76,7 +76,7 @@ select {
 .st3{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:square;stroke-miterlimit:10;}
 [data-ferry-route]{fill:none;stroke:#000000;stroke-width:4;}
 [data-ferry-stop]{fill:#FFFFFF;stroke:#000000;stroke-width:4.5455;}
-.st6{fill:#72B0AE;}
+.st6{fill:#90B6CB;}
 
 .route-map {
   transform: scale(1) translate(0,0);
@@ -88,11 +88,11 @@ select {
 .route-map [data-ferry-route~="larkspur"],
 .route-map [data-ferry-stop~="sausalito"],
 .route-map [data-ferry-route~="sausalito"] {
-  stroke: #ccc;
+  stroke: #999;
 }
 .route-map [data-ferry-stop~="larkspur"],
 .route-map [data-ferry-stop~="sausalito"] {
-  fill: #ddd;
+  fill: #bbb;
 }
 
 .route-map[data-zoom-to~="sf-ferry-bldg"] {
@@ -109,4 +109,25 @@ select {
 }
 .route-map[data-zoom-to~="larkspur"] {
   transform: scale(3) translate(100px, 120px);
+}
+
+@-webkit-keyframes pulse {
+  0% { stroke: #2F84A9; }
+  100% { stroke: #57A6C4; }
+}
+@-moz-keyframes pulse {
+  0% { stroke: #2F84A9; }
+  100% { stroke: #57A6C4; }
+}
+@keyframes pulse {
+  0% { stroke: #2F84A9; }
+  100% { stroke: #57A6C4; }
+}
+
+.route-map[data-nearest-ferry-stop~="tiburon"] [data-ferry-stop~="tiburon"] {
+  fill: #CFF1FF;
+  stroke: #2F84A9;
+  -webkit-animation: pulse 1s infinite alternate;
+  -moz-animation: pulse 1s infinite alternate;
+  animation: pulse 1s infinite alternate;
 }

@@ -7,11 +7,22 @@ var immutableUpdate = React.addons.update;
 
 var Map = React.createClass({
   mixins: [ RouterState, Navigation ],
+
+  propTypes: {
+    runningInBrowser: React.PropTypes.bool,
+    foundPosition: React.PropTypes.bool,
+    locationsByDistance: React.PropTypes.array
+  },
   
   render: function() {
+    var nearestFerryStop = this.nearestFerryStop();
     return <div className='map'>
       <h1 className="masthead">Tiburon-San Francisco Ferry Schedules</h1>
-      <svg version="1.1" viewBox="0 0 325 404" className='route-map' data-zoom-to={this.getQuery()['location-name']}>
+      <svg version="1.1"
+        viewBox="0 0 325 404"
+        className='route-map'
+        data-zoom-to={this.getQuery()['location-name']}
+        data-nearest-ferry-stop={nearestFerryStop && nearestFerryStop.id}>
       <g id="Layer_8">
         <g>
           <polygon className="st2" points="265.667,393.501 264.556,390.834 58.162,390.834 59,399.501 0,399.501 0,404.5 324.667,404.5 
@@ -364,6 +375,12 @@ var Map = React.createClass({
       'location-name': event.target.dataset.ferryStop
     }});
     this.transitionTo('listing', this.getParams(), queryForLocation);
+  },
+
+  nearestFerryStop: function() {
+    return this.props.foundPosition &&
+      this.props.locationsByDistance &&
+      this.props.locationsByDistance[0];
   }
 
 });
