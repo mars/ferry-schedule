@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var Transition = React.addons.CSSTransitionGroup;
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var RouteHandlerKey = require('./util/route-handler-key');
@@ -21,14 +22,18 @@ var App = React.createClass({
   },
 
   render: function() {
-    return <div className='ferry-schedule-app'>
-      <RouteHandler
-        scheduleData={this.props.scheduleData}
-        foundPosition={this.state.foundPosition}
-        locationsByDistance={this.state.locationsByDistance}
-        runningInBrowser={this.props.runningInBrowser}
-        key={this.routeHandlerKey()} 
-        routerState={this.props.routerState} />
+    return <div className='ferry-schedule-app screen'>
+      <Transition transitionName='to-listing' component='div' className='screen'>
+
+        <RouteHandler
+          scheduleData={this.props.scheduleData}
+          foundPosition={this.state.foundPosition}
+          locationsByDistance={this.state.locationsByDistance}
+          runningInBrowser={this.props.runningInBrowser}
+          key={this.routeHandlerKey()} 
+          routerState={this.props.routerState} />
+
+      </Transition>
     </div>;
   },
 

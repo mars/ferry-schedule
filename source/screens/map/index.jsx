@@ -16,7 +16,7 @@ var Map = React.createClass({
   
   render: function() {
     var nearestFerryStop = this.nearestFerryStop();
-    return <div className='map'>
+    return <div className='map screen'>
       <h1 className="masthead">Tiburon-San Francisco Ferry Schedules</h1>
       <svg version="1.1"
         viewBox="0 0 325 404"
@@ -374,6 +374,7 @@ var Map = React.createClass({
     var queryForLocation = immutableUpdate(this.getQuery(), {$merge: {
       'location-name': event.target.dataset.ferryStop
     }});
+    //this.transitionTo('map', this.getParams(), queryForLocation);
     this.transitionTo('listing', this.getParams(), queryForLocation);
   },
 

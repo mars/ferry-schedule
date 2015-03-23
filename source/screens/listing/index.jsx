@@ -51,7 +51,7 @@ var Listing = React.createClass({
     var byArrival = this.isActive('listing', null, { 'location-filter': 'by-arrival' });
     var currentWhenNotByArrival = cx({ current: !byArrival });
 
-    return <div className='schedule-listing'>
+    return <div className='schedule-listing screen'>
       <h1 className="masthead">Tiburon-San Francisco Ferry Schedules</h1>
       <div className='filters'>
         <span className='detail'>Schedule </span>{this.renderTimeSelect()}
