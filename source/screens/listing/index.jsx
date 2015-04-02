@@ -18,30 +18,6 @@ var Listing = React.createClass({
     foundPosition: React.PropTypes.bool,
     locationsByDistance: React.PropTypes.array
   },
-
-  componentDidMount: function() {
-    if (this.props.runningInBrowser) {
-      var originalQuery = this.getQuery();
-      var routeTime = originalQuery['time'] || this.currentRouteTime();
-      var queryForTime = immutableUpdate(originalQuery, {$merge: {
-        'time': routeTime
-      }});
-      this.replaceWith('listing', this.getParams(), queryForTime);
-    }
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    var locationQuery = this.getQuery()['location-name'];
-    var hasLocationQuery = locationQuery != null && locationQuery !== '';
-    if (nextProps.foundPosition && !this.props.foundPosition && !hasLocationQuery) {
-      var originalQuery = this.getQuery();
-      var nearestLocation = nextProps.locationsByDistance[0].id;
-      var queryForNearestLocation = immutableUpdate(originalQuery, {$merge: {
-        'location-name': nearestLocation
-      }});
-      this.replaceWith('listing', this.getParams(), queryForNearestLocation);
-    }
-  },
   
   render: function() {
     var locationQuery = this.getQuery()['location-name'];
@@ -102,7 +78,7 @@ var Listing = React.createClass({
   },
 
   renderTimeSelect: function() {
-    var timeQuery = this.getQuery()['time'] || '';
+    var timeQuery = this.getQuery()['time'] || this.currentRouteTime();
     return <select key='time-select'
       onChange={this.searchByTime}
       value={timeQuery.toLowerCase()}>
@@ -143,7 +119,7 @@ var Listing = React.createClass({
     if (timeQuery !== undefined && timeQuery !== '') {
       timeQuery = timeQuery.toLowerCase();
     } else {
-      timeQuery = 'weekday';
+      timeQuery = this.currentRouteTime();
     }
 
     var timeFormat = 'HH:mm a';

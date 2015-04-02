@@ -13,6 +13,10 @@ var Map = React.createClass({
     foundPosition: React.PropTypes.bool,
     locationsByDistance: React.PropTypes.array
   },
+
+  componentWillMount: function() {
+    this.debouncedSelectStop = debounce(this.selectStop, 100, true);
+  },
   
   render: function() {
     var nearestFerryStop = this.nearestFerryStop();
@@ -21,7 +25,6 @@ var Map = React.createClass({
       <svg version="1.1"
         viewBox="0 0 325 404"
         className='route-map'
-        data-zoom-to={this.getQuery()['location-name']}
         data-nearest-ferry-stop={nearestFerryStop && nearestFerryStop.id}>
       <g id="Layer_8">
         <g>
@@ -361,10 +364,16 @@ var Map = React.createClass({
         <polyline data-ferry-route="tiburon sf-ferry-bldg" points="155.167,192 245.667,282.5 245.667,323   "/>
         <polyline data-ferry-route="tiburon sf-pier-41" points="151.167,196 211.417,256.25 211.417,302  "/>
         <circle data-ferry-stop="larkspur" cx="69.167" cy="39" r="12.5"/>
-        <circle data-ferry-stop="tiburon" cx="144.667" cy="183.5" r="12.5" onClick={this.selectStop} onTouchEnd={this.selectStop}/>
+        <circle data-ferry-stop="tiburon" cx="144.667" cy="183.5" r="12.5"
+          onClick={this.debouncedSelectStop}
+          onTouchEnd={this.debouncedSelectStop}/>
         <circle data-ferry-stop="sausalito" cx="99.167" cy="204" r="12.5"/>
-        <circle data-ferry-stop="sf-pier-41" cx="209.167" cy="313" r="12.5" onClick={this.selectStop} onTouchEnd={this.selectStop}/>
-        <circle data-ferry-stop="sf-ferry-bldg" cx="251.667" cy="334" r="12.5" onClick={this.selectStop} onTouchEnd={this.selectStop}/>
+        <circle data-ferry-stop="sf-pier-41" cx="209.167" cy="313" r="12.5"
+          onClick={this.debouncedSelectStop}
+          onTouchEnd={this.debouncedSelectStop}/>
+        <circle data-ferry-stop="sf-ferry-bldg" cx="251.667" cy="334" r="12.5"
+          onClick={this.debouncedSelectStop}
+          onTouchEnd={this.debouncedSelectStop}/>
       </g>
       </svg>
     </div>;
@@ -374,7 +383,6 @@ var Map = React.createClass({
     var queryForLocation = immutableUpdate(this.getQuery(), {$merge: {
       'location-name': event.target.dataset.ferryStop
     }});
-    //this.transitionTo('map', this.getParams(), queryForLocation);
     this.transitionTo('listing', this.getParams(), queryForLocation);
   },
 
@@ -385,5 +393,21 @@ var Map = React.createClass({
   }
 
 });
+
+function debounce(func, wait, immediate) {
+  var timeout, result;
+  return function() {
+    var context = this, args = arguments;
+    var later = function() {
+      timeout = null;
+      if (!immediate) result = func.apply(context, args);
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) result = func.apply(context, args);
+    return result;
+  };
+};
 
 module.exports = Map;
