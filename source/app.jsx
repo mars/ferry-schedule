@@ -13,7 +13,8 @@ var App = React.createClass({
   getInitialState: function() {
     return {
       foundPosition: false,
-      locationsByDistance: []
+      locationsByDistance: [],
+      transitionName: 'to-listing'
     };
   },
 
@@ -21,9 +22,13 @@ var App = React.createClass({
     this.findPosition();
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    this.setTransitionDirection(nextProps);
+  },
+
   render: function() {
     return <div className='ferry-schedule-app screen'>
-      <Transition transitionName='to-listing' component='div' className='screen'>
+      <Transition transitionName={this.state.transitionName} component='div' className='screen'>
 
         <RouteHandler
           scheduleData={this.props.scheduleData}
@@ -86,6 +91,26 @@ var App = React.createClass({
       coords2.latitude, coords2.longitude,
       GeocodeDistance.EarthRadiusInKilometers).toPrecision(2);
     return distances;
+  },
+
+  currentRouteName: function() {
+    return this.props.routerState.pathname;
+  },
+
+  // Directional animated transitions based on route history.
+  setTransitionDirection: function(nextProps) {
+    var currentRouteName = this.currentRouteName();
+    var nextRouteName = nextProps.routerState.pathname;
+
+    if (nextRouteName === '/listing') {
+      this.setState({ 
+        transitionName: 'to-listing'
+      });
+    } else if (nextRouteName === '/') {
+      this.setState({ 
+        transitionName: 'to-map'
+      });
+    }
   }
 
 });
