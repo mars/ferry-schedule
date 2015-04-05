@@ -1,7 +1,7 @@
 #### Run for Dev
 
-* Run backend server `npm start`
-* Run dev server with hot module replacement `npm run dev-server`
+* Run backend server `npm run watch`
+* Run dev server with hot module replacement `npm run webpack-server`
 * Visit http://localhost:8080/
 
 #### Deploy
