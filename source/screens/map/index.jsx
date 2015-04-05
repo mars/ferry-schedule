@@ -383,7 +383,9 @@ var Map = React.createClass({
     var queryForLocation = immutableUpdate(this.getQuery(), {$merge: {
       'location-name': event.target.dataset.ferryStop
     }});
-    this.transitionTo('listing', this.getParams(), queryForLocation);
+    requestAnimationFrame(function() {
+      this.transitionTo('listing', this.getParams(), queryForLocation);
+    }.bind(this))
   },
 
   nearestFerryStop: function() {
