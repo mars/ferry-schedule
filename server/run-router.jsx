@@ -11,25 +11,26 @@ export default function runRouter(requestUrl, response) {
     var reactHtml = React.renderToString(
       React.createElement(Handler, {
         routerState: state,
-        scheduleData: scheduleData
+        scheduleData: scheduleData,
+        isPrerender: true
       })
     );
 
-    var html = '<!DOCTYPE html>\n'+
-      '<html>\n'+
-      '<head>\n'+
-      '  <meta charset="utf-8">\n'+
-      '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'+
-      '  <meta http-equiv="X-UA-Compatible" content="IE=edge">\n'+
-      '  <title>Ferry Schedules</title>\n'+
-      '  <link rel="stylesheet" href="/ferry-schedule.css">\n'+
-      '</head>\n'+
-      '<body>\n'+
-      '  <div class="react-app">'+reactHtml+'</div>\n'+
-      '  <script>window.scheduleData = '+scheduleDataJSON+';</script>\n'+
-      '  <script src="/ferry-schedule.bundle.js"></script>\n'+
-      '</body>\n'+
-      '</html>';
+    var html = `<!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Ferry Schedules</title>
+        <link rel="stylesheet" href="/ferry-schedule.css">
+      </head>
+      <body>
+        <div class="react-app">${reactHtml}</div>
+        <script>window.scheduleData = ${scheduleDataJSON};</script>
+        <script src="/ferry-schedule.bundle.js"></script>
+      </body>
+      </html>`;
 
     response.end(html);
   });
