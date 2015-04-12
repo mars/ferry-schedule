@@ -7,6 +7,8 @@
     "start": "node server/main.js",
     "watch": "./node_modules/.bin/supervisor --extensions js,jsx -- server/main.js",
     "webpack-server": "./node_modules/.bin/webpack-dev-server --config webpack-dev-server.config.js",
+    "autoprefix": "./node_modules/.bin/autoprefixer -b 'last 2 versions' dist/ferry-schedule.css",
+    "autoprefix:clean": "./node_modules/.bin/autoprefixer --clean dist/ferry-schedule.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mars@vurt.com",
@@ -20,6 +22,7 @@
     "webpack": "1.5.3"
   },
   "devDependencies": {
+    "autoprefixer": "^5.1.0",
     "babel-core": "5.0.8",
     "babel-loader": "5.0.0",
     "react-hot-loader": "1.2.4",

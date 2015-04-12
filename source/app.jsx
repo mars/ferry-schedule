@@ -27,8 +27,8 @@ var App = React.createClass({
   },
 
   render: function() {
-    return <div className='ferry-schedule-app screen'>
-      <Transition transitionName={this.state.transitionName} component='div' className='screen'>
+    return <div className='ferry-schedule-app'>
+      <Transition transitionName={this.state.transitionName}>
 
         <RouteHandler
           scheduleData={this.props.scheduleData}
