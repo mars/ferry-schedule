@@ -13,7 +13,6 @@ html, body, .screen {
 
 .screen {
   transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 a {
@@ -88,13 +87,10 @@ select {
 
   transform: translate3d(100%,0,0);
   transition: transform .23s ease-in-out;
-  -webkit-transform: translate3d(100%,0,0);
-  -webkit-transition: -webkit-transform .23s ease-in-out;
 }
 
 .to-listing-enter.to-listing-enter-active {
   transform: translate3d(0,0,0);
-  -webkit-transform: translate3d(0,0,0);
 }
 
 .to-listing-leave {
@@ -105,13 +101,10 @@ select {
 
   transform: translate3d(0,0,0);
   transition: transform .3s ease-in-out;
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-transition: -webkit-transform .23s ease-in-out;
 }
 
 .to-listing-leave.to-listing-leave-active {
   transform: translate3d(-100%,0,0);
-  -webkit-transform: translate3d(-100%,0,0);
 }
 
 .to-map-enter {
@@ -122,13 +115,10 @@ select {
 
   transform: translate3d(-100%,0,0);
   transition: transform .23s ease-in-out;
-  -webkit-transform: translate3d(-100%,0,0);
-  -webkit-transition: -webkit-transform .23s ease-in-out;
 }
 
 .to-map-enter.to-map-enter-active {
   transform: translate3d(0,0,0);
-  -webkit-transform: translate3d(0,0,0);
 }
 
 .to-map-leave {
@@ -139,13 +129,10 @@ select {
 
   transform: translate3d(0,0,0);
   transition: transform .3s ease-in-out;
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-transition: -webkit-transform .23s ease-in-out;
 }
 
 .to-map-leave.to-map-leave-active {
   transform: translate3d(100%,0,0);
-  -webkit-transform: translate3d(100%,0,0);
 }
 
 .st0{fill:#ACBDBD;}
@@ -173,14 +160,6 @@ select {
   fill: #bbb;
 }
 
-@-webkit-keyframes pulse {
-  0% { stroke: #2F84A9; }
-  100% { stroke: #57A6C4; }
-}
-@-moz-keyframes pulse {
-  0% { stroke: #2F84A9; }
-  100% { stroke: #57A6C4; }
-}
 @keyframes pulse {
   0% { stroke: #2F84A9; }
   100% { stroke: #57A6C4; }
@@ -191,7 +170,5 @@ select {
 .route-map[data-nearest-ferry-stop~="sf-pier-41"] [data-ferry-stop~="sf-pier-41"] {
   fill: #CFF1FF;
   stroke: #2F84A9;
-  -webkit-animation: pulse 1s infinite alternate;
-  -moz-animation: pulse 1s infinite alternate;
   animation: pulse 1s infinite alternate;
 }
