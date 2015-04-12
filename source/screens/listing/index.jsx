@@ -181,7 +181,7 @@ var Listing = React.createClass({
     });
 
     return sortedJourneys.length === 0 ? <tr>
-      <td key='none-origin'><span className='detail'>None</span></td>,
+      <td key='none-origin'><span className='detail'>None</span></td>
       <td key='none-destination' className='flush-right'><span className='detail'>None</span></td>
     </tr> : sortedJourneys;
   },
