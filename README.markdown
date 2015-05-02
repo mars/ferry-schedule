@@ -6,6 +6,8 @@
 
 #### Deploy
 
+    ./node_modules/.bin/webpack
+    docker build -t ferry-life .
     docker save -o ~/Desktop/ferry-life-NNN.dockerimage ferry-life
     pushd ~/Desktop/
     gzip --keep --name ferry-life-NNN.dockerimage
