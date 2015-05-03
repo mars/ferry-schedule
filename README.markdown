@@ -16,3 +16,11 @@
     gzip -d ferry-life-NNN.dockerimage.gz
     docker load -i ferry-life-NNN.dockerimage
     docker run -dt -p 80:8000 --name ferry-life-NNN ferry-life node server/main.js
+
+#### Native iOS
+
+    cd FerryLife
+    npm install
+    npm run webpack
+    npm run start (in a different terminal)
+    open FerryLife.xcodeproj
