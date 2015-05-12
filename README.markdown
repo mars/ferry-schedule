@@ -6,7 +6,7 @@
 
 #### Deploy (Heroku-Docker)
 
-    heroku docker:exec ./node_modules/.bin/webpack
+    heroku docker:exec ./node_modules/.bin/webpack --optimize-minimize
     heroku docker:release
 
 #### Native iOS
