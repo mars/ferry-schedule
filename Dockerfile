@@ -5,7 +5,7 @@ USER app
 WORKDIR /app
 
 ENV HOME /app
-ENV NODE_ENGINE 0.10.38
+ENV NODE_ENGINE 0.12.2
 ENV PORT 3000
 
 RUN mkdir -p /app/heroku/node
