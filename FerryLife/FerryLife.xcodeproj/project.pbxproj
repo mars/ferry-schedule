@@ -22,7 +22,9 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		41C390C11B02950C006593F3 /* StyleKit in Resources */ = {isa = PBXBuildFile; fileRef = 41C390C01B02950C006593F3 /* StyleKit */; };
+		41C390C51B029602006593F3 /* MapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C390C41B029602006593F3 /* MapViewManager.m */; };
+		41C390C81B029635006593F3 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C390C71B029635006593F3 /* MapView.m */; };
+		41C390CB1B029700006593F3 /* FerryLifeStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C390CA1B029700006593F3 /* FerryLifeStyleKit.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -126,7 +128,12 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		41C390C01B02950C006593F3 /* StyleKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = StyleKit; path = iOS/StyleKit; sourceTree = "<group>"; };
+		41C390C31B029602006593F3 /* MapViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewManager.h; path = iOS/Map/MapViewManager.h; sourceTree = "<group>"; };
+		41C390C41B029602006593F3 /* MapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewManager.m; path = iOS/Map/MapViewManager.m; sourceTree = "<group>"; };
+		41C390C61B029635006593F3 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapView.h; path = iOS/Map/MapView.h; sourceTree = "<group>"; };
+		41C390C71B029635006593F3 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapView.m; path = iOS/Map/MapView.m; sourceTree = "<group>"; };
+		41C390C91B029700006593F3 /* FerryLifeStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FerryLifeStyleKit.h; path = iOS/FerryLifeStyleKit.h; sourceTree = "<group>"; };
+		41C390CA1B029700006593F3 /* FerryLifeStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FerryLifeStyleKit.m; path = iOS/FerryLifeStyleKit.m; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -235,7 +242,9 @@
 		13B07FAE1A68108700A75B9A /* FerryLife */ = {
 			isa = PBXGroup;
 			children = (
-				41C390C01B02950C006593F3 /* StyleKit */,
+				41C390C91B029700006593F3 /* FerryLifeStyleKit.h */,
+				41C390CA1B029700006593F3 /* FerryLifeStyleKit.m */,
+				41C390C21B0295D9006593F3 /* Map */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -253,6 +262,17 @@
 				146834041AC3E56700842450 /* libReact.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		41C390C21B0295D9006593F3 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				41C390C31B029602006593F3 /* MapViewManager.h */,
+				41C390C41B029602006593F3 /* MapViewManager.m */,
+				41C390C61B029635006593F3 /* MapView.h */,
+				41C390C71B029635006593F3 /* MapView.m */,
+			);
+			name = Map;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -512,7 +532,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
-				41C390C11B02950C006593F3 /* StyleKit in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
@@ -534,7 +553,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				41C390C81B029635006593F3 /* MapView.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				41C390C51B029602006593F3 /* MapViewManager.m in Sources */,
+				41C390CB1B029700006593F3 /* FerryLifeStyleKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

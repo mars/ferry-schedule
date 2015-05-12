@@ -1,5 +1,5 @@
 //
-//  FerryLife.h
+//  FerryLifeStyleKit.h
 //  Build with Reactive Native
 //
 //  Created by Mars on 2015-05-12.
@@ -12,7 +12,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface FerryLife : NSObject
+@interface FerryLifeStyleKit : NSObject
 
 // Colors
 + (UIColor*)water;
