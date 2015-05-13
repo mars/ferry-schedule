@@ -40,23 +40,32 @@
            withEvent:(UIEvent *)event {
   UITouch *touch = [touches anyObject];
   CGPoint currentLocation = [touch locationInView:self];
+  NSString* foundTerminal = [self findTerminalMarkerWithPoint:currentLocation];
   
+  NSLog(@"touched '%@'", foundTerminal);
+}
+
+- (NSString*)findTerminalMarkerWithPoint:(CGPoint)refPoint
+{
   NSValue* marker;
   CGPoint markerPoint;
-  BOOL wasTouched;
+  NSString* foundTerminal;
+  BOOL didFind = false;
   for (NSString* terminal in self.terminalMarkers) {
     marker = [self.terminalMarkers objectForKey:terminal];
     markerPoint = [marker CGPointValue];
-    wasTouched =
-      markerPoint.x <= currentLocation.x &&
-      markerPoint.x + self.terminalMarkerSize >= currentLocation.x &&
-      markerPoint.y <= currentLocation.y &&
-      markerPoint.y + self.terminalMarkerSize >= currentLocation.y;
+    didFind =
+      markerPoint.x <= refPoint.x &&
+      markerPoint.x + self.terminalMarkerSize >= refPoint.x &&
+      markerPoint.y <= refPoint.y &&
+      markerPoint.y + self.terminalMarkerSize >= refPoint.y;
     
-    if (wasTouched) {
-      NSLog(@"touched '%@'", terminal);
+    if (didFind) {
+      foundTerminal = terminal;
+      break;
     }
   }
+  return foundTerminal;
 }
 
 @end
