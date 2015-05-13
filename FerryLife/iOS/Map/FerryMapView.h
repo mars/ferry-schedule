@@ -6,10 +6,12 @@
 //  Copyright (c) 2015 Mars Hall. All rights reserved.
 //
 
+#import "RCTBridgeModule.h"
+
 #import <UIKit/UIKit.h>
 #import "FerryLifeStyleKit.h"
 
-@interface MapView : UIView
+@interface FerryMapView : UIView<RCTBridgeModule>
 
 @property (nonatomic) int terminalMarkerSize;
 @property (nonatomic, strong) NSDictionary* terminalMarkers;

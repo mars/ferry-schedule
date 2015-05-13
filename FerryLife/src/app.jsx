@@ -1,5 +1,5 @@
 import React from 'react-native';
-import MapView from './map';
+import FerryMapView from './ferry-map';
 
 let { AppRegistry, StyleSheet, Text, View } = React;
 
@@ -34,7 +34,7 @@ let FerryLife = React.createClass({
         <Text style={styles.title}>
           Marin-San Francisco Ferry Schedules
         </Text>
-        <MapView style={styles.map} {...this.props} />
+        <FerryMapView style={styles.map} {...this.props} />
       </View>
     );
   }

@@ -6,16 +6,16 @@
 //  Copyright (c) 2015 Mars Hall. All rights reserved.
 //
 
-#import "MapViewManager.h"
-#import "MapView.h"
+#import "FerryMapViewManager.h"
+#import "FerryMapView.h"
 
-@implementation MapViewManager
+@implementation FerryMapViewManager
 
 RCT_EXPORT_MODULE();
 
 - (UIView *)view
 {
-  return [[MapView alloc] init];
+  return [[FerryMapView alloc] init];
 }
 
 @end

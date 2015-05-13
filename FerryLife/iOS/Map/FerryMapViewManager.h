@@ -8,6 +8,6 @@
 
 #import "RCTViewManager.h"
 
-@interface MapViewManager : RCTViewManager
+@interface FerryMapViewManager : RCTViewManager
 
 @end

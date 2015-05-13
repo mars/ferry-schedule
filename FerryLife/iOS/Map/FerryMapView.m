@@ -6,10 +6,16 @@
 //  Copyright (c) 2015 Mars Hall. All rights reserved.
 //
 
-#import "MapView.h"
+#import "RCTBridge.h"
+#import "RCTEventDispatcher.h"
 
+#import "FerryMapView.h"
 
-@implementation MapView
+@implementation FerryMapView
+
+RCT_EXPORT_MODULE();
+
+@synthesize bridge = _bridge;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -43,6 +49,8 @@
   NSString* foundTerminal = [self findTerminalMarkerWithPoint:currentLocation];
   
   NSLog(@"touched '%@'", foundTerminal);
+  [_bridge.eventDispatcher sendDeviceEventWithName:@"SelectFerryTerminal"
+                                               body:@{@"name": foundTerminal}];
 }
 
 - (NSString*)findTerminalMarkerWithPoint:(CGPoint)refPoint
