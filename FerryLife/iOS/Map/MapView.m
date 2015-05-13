@@ -11,7 +11,7 @@
 @implementation MapView
 
 - (void)drawRect:(CGRect)rect {
-    [FerryLifeStyleKit drawFerryMap];
+    [FerryLifeStyleKit drawFerryMapIPhone6];
 }
 
 @end

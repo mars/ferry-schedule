@@ -23,5 +23,6 @@
 
 // Drawing Methods
 + (void)drawFerryMap;
++ (void)drawFerryMapIPhone6;
 
 @end

@@ -573,4 +573,20 @@ static UIColor* _vividWater = nil;
     }
 }
 
++ (void)drawFerryMapIPhone6
+{
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    //// Symbol Drawing
+    CGRect symbolRect = CGRectMake(0, 0, 375, 467);
+    CGContextSaveGState(context);
+    UIRectClip(symbolRect);
+    CGContextTranslateCTM(context, symbolRect.origin.x, symbolRect.origin.y);
+    CGContextScaleCTM(context, symbolRect.size.width / 325, symbolRect.size.height / 405);
+
+    [FerryLifeStyleKit drawFerryMap];
+    CGContextRestoreGState(context);
+}
+
 @end
