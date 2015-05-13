@@ -14,15 +14,26 @@
 
 @interface FerryLifeStyleKit : NSObject
 
+// iOS Controls Customization Outlets
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* terminalMarkerTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* disabledTerminalMarkerTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* hiddenTerminalMarkerTargets;
+
 // Colors
 + (UIColor*)water;
 + (UIColor*)land;
 + (UIColor*)bright;
 + (UIColor*)dark;
 + (UIColor*)vividWater;
++ (UIColor*)disabled;
++ (UIColor*)disabledAccent;
 
 // Drawing Methods
 + (void)drawFerryMap;
-+ (void)drawFerryMapIPhone6;
+
+// Generated Images
++ (UIImage*)imageOfTerminalMarker;
++ (UIImage*)imageOfDisabledTerminalMarker;
++ (UIImage*)imageOfHiddenTerminalMarker;
 
 @end

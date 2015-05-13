@@ -11,4 +11,7 @@
 
 @interface MapView : UIView
 
+@property (nonatomic) int terminalMarkerSize;
+@property (nonatomic, strong) NSDictionary* terminalMarkers;
+
 @end

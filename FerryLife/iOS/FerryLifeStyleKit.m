@@ -20,6 +20,12 @@ static UIColor* _land = nil;
 static UIColor* _bright = nil;
 static UIColor* _dark = nil;
 static UIColor* _vividWater = nil;
+static UIColor* _disabled = nil;
+static UIColor* _disabledAccent = nil;
+
+static UIImage* _imageOfTerminalMarker = nil;
+static UIImage* _imageOfDisabledTerminalMarker = nil;
+static UIImage* _imageOfHiddenTerminalMarker = nil;
 
 #pragma mark Initialization
 
@@ -34,6 +40,14 @@ static UIColor* _vividWater = nil;
     _land = [UIColor colorWithRed: 0.675 green: 0.741 blue: 0.741 alpha: 1];
     _bright = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
     _dark = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+    CGFloat darkHSBA[4];
+    [_dark getHue: &darkHSBA[0] saturation: &darkHSBA[1] brightness: &darkHSBA[2] alpha: &darkHSBA[3]];
+
+    _disabled = [UIColor colorWithHue: darkHSBA[0] saturation: darkHSBA[1] brightness: 0.5 alpha: darkHSBA[3]];
+    CGFloat disabledHSBA[4];
+    [_disabled getHue: &disabledHSBA[0] saturation: &disabledHSBA[1] brightness: &disabledHSBA[2] alpha: &disabledHSBA[3]];
+
+    _disabledAccent = [UIColor colorWithHue: disabledHSBA[0] saturation: disabledHSBA[1] brightness: 0.8 alpha: disabledHSBA[3]];
 
 }
 
@@ -44,6 +58,8 @@ static UIColor* _vividWater = nil;
 + (UIColor*)bright { return _bright; }
 + (UIColor*)dark { return _dark; }
 + (UIColor*)vividWater { return _vividWater; }
++ (UIColor*)disabled { return _disabled; }
++ (UIColor*)disabledAccent { return _disabledAccent; }
 
 #pragma mark Drawing Methods
 
@@ -365,51 +381,6 @@ static UIColor* _vividWater = nil;
 
     //// Routes
     {
-        //// Larkspur marker Drawing
-        UIBezierPath* larkspurMarkerPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(58.67, 25.5, 25, 25)];
-        [FerryLifeStyleKit.bright setFill];
-        [larkspurMarkerPath fill];
-        [FerryLifeStyleKit.dark setStroke];
-        larkspurMarkerPath.lineWidth = 4;
-        [larkspurMarkerPath stroke];
-
-
-        //// Tiburon marker Drawing
-        UIBezierPath* tiburonMarkerPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(134.17, 170, 25, 25)];
-        [FerryLifeStyleKit.bright setFill];
-        [tiburonMarkerPath fill];
-        [FerryLifeStyleKit.dark setStroke];
-        tiburonMarkerPath.lineWidth = 4;
-        [tiburonMarkerPath stroke];
-
-
-        //// Sausalito marker Drawing
-        UIBezierPath* sausalitoMarkerPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(88.67, 190.5, 25, 25)];
-        [FerryLifeStyleKit.bright setFill];
-        [sausalitoMarkerPath fill];
-        [FerryLifeStyleKit.dark setStroke];
-        sausalitoMarkerPath.lineWidth = 4;
-        [sausalitoMarkerPath stroke];
-
-
-        //// Pier 41 marker Drawing
-        UIBezierPath* pier41MarkerPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(198.67, 299.5, 25, 25)];
-        [FerryLifeStyleKit.bright setFill];
-        [pier41MarkerPath fill];
-        [FerryLifeStyleKit.dark setStroke];
-        pier41MarkerPath.lineWidth = 4;
-        [pier41MarkerPath stroke];
-
-
-        //// Ferry Bldg marker Drawing
-        UIBezierPath* ferryBldgMarkerPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(241.17, 320.5, 25, 25)];
-        [FerryLifeStyleKit.bright setFill];
-        [ferryBldgMarkerPath fill];
-        [FerryLifeStyleKit.dark setStroke];
-        ferryBldgMarkerPath.lineWidth = 4;
-        [ferryBldgMarkerPath stroke];
-
-
         //// Larkspur-Ferry-Bldg route Drawing
         UIBezierPath* larkspurFerryBldgRoutePath = UIBezierPath.bezierPath;
         [larkspurFerryBldgRoutePath moveToPoint: CGPointMake(81.17, 47.33)];
@@ -417,9 +388,47 @@ static UIColor* _vividWater = nil;
         [larkspurFerryBldgRoutePath addLineToPoint: CGPointMake(258.83, 323.33)];
         larkspurFerryBldgRoutePath.miterLimit = 4;
 
-        [FerryLifeStyleKit.dark setStroke];
+        [FerryLifeStyleKit.disabled setStroke];
         larkspurFerryBldgRoutePath.lineWidth = 4;
         [larkspurFerryBldgRoutePath stroke];
+
+
+        //// Sausalito-Ferry-Bldg route Drawing
+        UIBezierPath* sausalitoFerryBldgRoutePath = UIBezierPath.bezierPath;
+        [sausalitoFerryBldgRoutePath moveToPoint: CGPointMake(253.17, 320.5)];
+        [sausalitoFerryBldgRoutePath addLineToPoint: CGPointMake(253.17, 279)];
+        [sausalitoFerryBldgRoutePath addLineToPoint: CGPointMake(177.17, 203)];
+        [sausalitoFerryBldgRoutePath addLineToPoint: CGPointMake(113.67, 203)];
+        sausalitoFerryBldgRoutePath.miterLimit = 4;
+
+        [FerryLifeStyleKit.disabled setStroke];
+        sausalitoFerryBldgRoutePath.lineWidth = 4;
+        [sausalitoFerryBldgRoutePath stroke];
+
+
+        //// Sausalito-Pier-41 route Drawing
+        UIBezierPath* sausalitoPier41RoutePath = UIBezierPath.bezierPath;
+        [sausalitoPier41RoutePath moveToPoint: CGPointMake(113.17, 208.5)];
+        [sausalitoPier41RoutePath addLineToPoint: CGPointMake(158.67, 208.5)];
+        [sausalitoPier41RoutePath addLineToPoint: CGPointMake(207.92, 257.75)];
+        [sausalitoPier41RoutePath addLineToPoint: CGPointMake(207.92, 300.5)];
+        sausalitoPier41RoutePath.miterLimit = 4;
+
+        [FerryLifeStyleKit.disabled setStroke];
+        sausalitoPier41RoutePath.lineWidth = 4;
+        [sausalitoPier41RoutePath stroke];
+
+
+        //// Sausalito-Tiburon route Drawing
+        UIBezierPath* sausalitoTiburonRoutePath = UIBezierPath.bezierPath;
+        [sausalitoTiburonRoutePath moveToPoint: CGPointMake(113.67, 197.5)];
+        [sausalitoTiburonRoutePath addLineToPoint: CGPointMake(131.17, 197.5)];
+        [sausalitoTiburonRoutePath addLineToPoint: CGPointMake(137.42, 191.25)];
+        sausalitoTiburonRoutePath.miterLimit = 4;
+
+        [FerryLifeStyleKit.disabled setStroke];
+        sausalitoTiburonRoutePath.lineWidth = 4;
+        [sausalitoTiburonRoutePath stroke];
 
 
         //// Tiburon-Ferry-Bldg route Drawing
@@ -444,64 +453,19 @@ static UIColor* _vividWater = nil;
         [FerryLifeStyleKit.dark setStroke];
         tiburonPier41RoutePath.lineWidth = 4;
         [tiburonPier41RoutePath stroke];
-
-
-        //// Sausalito-Ferry-Bldg route Drawing
-        UIBezierPath* sausalitoFerryBldgRoutePath = UIBezierPath.bezierPath;
-        [sausalitoFerryBldgRoutePath moveToPoint: CGPointMake(253.17, 320.5)];
-        [sausalitoFerryBldgRoutePath addLineToPoint: CGPointMake(253.17, 279)];
-        [sausalitoFerryBldgRoutePath addLineToPoint: CGPointMake(177.17, 203)];
-        [sausalitoFerryBldgRoutePath addLineToPoint: CGPointMake(113.67, 203)];
-        sausalitoFerryBldgRoutePath.miterLimit = 4;
-
-        [FerryLifeStyleKit.dark setStroke];
-        sausalitoFerryBldgRoutePath.lineWidth = 4;
-        [sausalitoFerryBldgRoutePath stroke];
-
-
-        //// Sausalito-Pier-41 route Drawing
-        UIBezierPath* sausalitoPier41RoutePath = UIBezierPath.bezierPath;
-        [sausalitoPier41RoutePath moveToPoint: CGPointMake(113.17, 208.5)];
-        [sausalitoPier41RoutePath addLineToPoint: CGPointMake(158.67, 208.5)];
-        [sausalitoPier41RoutePath addLineToPoint: CGPointMake(207.92, 257.75)];
-        [sausalitoPier41RoutePath addLineToPoint: CGPointMake(207.92, 300.5)];
-        sausalitoPier41RoutePath.miterLimit = 4;
-
-        [FerryLifeStyleKit.dark setStroke];
-        sausalitoPier41RoutePath.lineWidth = 4;
-        [sausalitoPier41RoutePath stroke];
-
-
-        //// Sausalito-Tiburon route Drawing
-        UIBezierPath* sausalitoTiburonRoutePath = UIBezierPath.bezierPath;
-        [sausalitoTiburonRoutePath moveToPoint: CGPointMake(113.67, 197.5)];
-        [sausalitoTiburonRoutePath addLineToPoint: CGPointMake(131.17, 197.5)];
-        [sausalitoTiburonRoutePath addLineToPoint: CGPointMake(137.42, 191.25)];
-        sausalitoTiburonRoutePath.miterLimit = 4;
-
-        [FerryLifeStyleKit.dark setStroke];
-        sausalitoTiburonRoutePath.lineWidth = 4;
-        [sausalitoTiburonRoutePath stroke];
     }
 
 
     //// Terminals
     {
-        //// Larkspur label Drawing
-        CGRect larkspurLabelRect = CGRectMake(2, 18, 51, 29);
-        {
-            NSString* textContent = @"Larkspur";
-            NSMutableParagraphStyle* larkspurLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-            larkspurLabelStyle.alignment = NSTextAlignmentRight;
+        //// Sausalito marker Drawing
+        CGRect sausalitoMarkerRect = CGRectMake(80, 181, 44, 44);
+        CGContextSaveGState(context);
+        UIRectClip(sausalitoMarkerRect);
+        CGContextTranslateCTM(context, sausalitoMarkerRect.origin.x, sausalitoMarkerRect.origin.y);
 
-            NSDictionary* larkspurLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNextCondensed-Bold" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: FerryLifeStyleKit.dark, NSParagraphStyleAttributeName: larkspurLabelStyle};
-
-            CGFloat larkspurLabelTextHeight = [textContent boundingRectWithSize: CGSizeMake(larkspurLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: larkspurLabelFontAttributes context: nil].size.height;
-            CGContextSaveGState(context);
-            CGContextClipToRect(context, larkspurLabelRect);
-            [textContent drawInRect: CGRectMake(CGRectGetMinX(larkspurLabelRect), CGRectGetMinY(larkspurLabelRect) + (CGRectGetHeight(larkspurLabelRect) - larkspurLabelTextHeight) / 2, CGRectGetWidth(larkspurLabelRect), larkspurLabelTextHeight) withAttributes: larkspurLabelFontAttributes];
-            CGContextRestoreGState(context);
-        }
+        [FerryLifeStyleKit drawDisabledTerminalMarker];
+        CGContextRestoreGState(context);
 
 
         //// Sausalito label Drawing
@@ -511,7 +475,7 @@ static UIColor* _vividWater = nil;
             NSMutableParagraphStyle* sausalitoLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
             sausalitoLabelStyle.alignment = NSTextAlignmentRight;
 
-            NSDictionary* sausalitoLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNextCondensed-Bold" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: FerryLifeStyleKit.dark, NSParagraphStyleAttributeName: sausalitoLabelStyle};
+            NSDictionary* sausalitoLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNextCondensed-Bold" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: FerryLifeStyleKit.disabled, NSParagraphStyleAttributeName: sausalitoLabelStyle};
 
             CGFloat sausalitoLabelTextHeight = [textContent boundingRectWithSize: CGSizeMake(sausalitoLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sausalitoLabelFontAttributes context: nil].size.height;
             CGContextSaveGState(context);
@@ -519,6 +483,70 @@ static UIColor* _vividWater = nil;
             [textContent drawInRect: CGRectMake(CGRectGetMinX(sausalitoLabelRect), CGRectGetMinY(sausalitoLabelRect) + (CGRectGetHeight(sausalitoLabelRect) - sausalitoLabelTextHeight) / 2, CGRectGetWidth(sausalitoLabelRect), sausalitoLabelTextHeight) withAttributes: sausalitoLabelFontAttributes];
             CGContextRestoreGState(context);
         }
+
+
+        //// Larkspur marker Drawing
+        CGRect larkspurMarkerRect = CGRectMake(50, 17, 44, 44);
+        CGContextSaveGState(context);
+        UIRectClip(larkspurMarkerRect);
+        CGContextTranslateCTM(context, larkspurMarkerRect.origin.x, larkspurMarkerRect.origin.y);
+
+        [FerryLifeStyleKit drawDisabledTerminalMarker];
+        CGContextRestoreGState(context);
+
+
+        //// Larkspur label Drawing
+        CGRect larkspurLabelRect = CGRectMake(2, 18, 51, 29);
+        {
+            NSString* textContent = @"Larkspur";
+            NSMutableParagraphStyle* larkspurLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            larkspurLabelStyle.alignment = NSTextAlignmentRight;
+
+            NSDictionary* larkspurLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNextCondensed-Bold" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: FerryLifeStyleKit.disabled, NSParagraphStyleAttributeName: larkspurLabelStyle};
+
+            CGFloat larkspurLabelTextHeight = [textContent boundingRectWithSize: CGSizeMake(larkspurLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: larkspurLabelFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, larkspurLabelRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(larkspurLabelRect), CGRectGetMinY(larkspurLabelRect) + (CGRectGetHeight(larkspurLabelRect) - larkspurLabelTextHeight) / 2, CGRectGetWidth(larkspurLabelRect), larkspurLabelTextHeight) withAttributes: larkspurLabelFontAttributes];
+            CGContextRestoreGState(context);
+        }
+
+
+        //// Tiburon marker Drawing
+        CGRect tiburonMarkerRect = CGRectMake(124, 162, 44, 44);
+        CGContextSaveGState(context);
+        UIRectClip(tiburonMarkerRect);
+        CGContextTranslateCTM(context, tiburonMarkerRect.origin.x, tiburonMarkerRect.origin.y);
+
+        [FerryLifeStyleKit drawHiddenTerminalMarker];
+        CGContextRestoreGState(context);
+
+
+        //// Tiburon label Drawing
+        CGRect tiburonLabelRect = CGRectMake(79, 161, 51, 29);
+        {
+            NSString* textContent = @"Tiburon";
+            NSMutableParagraphStyle* tiburonLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+            tiburonLabelStyle.alignment = NSTextAlignmentRight;
+
+            NSDictionary* tiburonLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNextCondensed-Bold" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: FerryLifeStyleKit.dark, NSParagraphStyleAttributeName: tiburonLabelStyle};
+
+            CGFloat tiburonLabelTextHeight = [textContent boundingRectWithSize: CGSizeMake(tiburonLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: tiburonLabelFontAttributes context: nil].size.height;
+            CGContextSaveGState(context);
+            CGContextClipToRect(context, tiburonLabelRect);
+            [textContent drawInRect: CGRectMake(CGRectGetMinX(tiburonLabelRect), CGRectGetMinY(tiburonLabelRect) + (CGRectGetHeight(tiburonLabelRect) - tiburonLabelTextHeight) / 2, CGRectGetWidth(tiburonLabelRect), tiburonLabelTextHeight) withAttributes: tiburonLabelFontAttributes];
+            CGContextRestoreGState(context);
+        }
+
+
+        //// Pier 41 marker Drawing
+        CGRect pier41MarkerRect = CGRectMake(188, 291, 44, 44);
+        CGContextSaveGState(context);
+        UIRectClip(pier41MarkerRect);
+        CGContextTranslateCTM(context, pier41MarkerRect.origin.x, pier41MarkerRect.origin.y);
+
+        [FerryLifeStyleKit drawHiddenTerminalMarker];
+        CGContextRestoreGState(context);
 
 
         //// Pier 41 label Drawing
@@ -538,6 +566,16 @@ static UIColor* _vividWater = nil;
         }
 
 
+        //// Ferry Bldg marker Drawing
+        CGRect ferryBldgMarkerRect = CGRectMake(231, 312, 44, 44);
+        CGContextSaveGState(context);
+        UIRectClip(ferryBldgMarkerRect);
+        CGContextTranslateCTM(context, ferryBldgMarkerRect.origin.x, ferryBldgMarkerRect.origin.y);
+
+        [FerryLifeStyleKit drawHiddenTerminalMarker];
+        CGContextRestoreGState(context);
+
+
         //// Ferry Bldg label Drawing
         CGRect ferryBldgLabelRect = CGRectMake(186, 325, 51, 29);
         {
@@ -553,40 +591,106 @@ static UIColor* _vividWater = nil;
             [textContent drawInRect: CGRectMake(CGRectGetMinX(ferryBldgLabelRect), CGRectGetMinY(ferryBldgLabelRect) + (CGRectGetHeight(ferryBldgLabelRect) - ferryBldgLabelTextHeight) / 2, CGRectGetWidth(ferryBldgLabelRect), ferryBldgLabelTextHeight) withAttributes: ferryBldgLabelFontAttributes];
             CGContextRestoreGState(context);
         }
-
-
-        //// Tiburon label Drawing
-        CGRect tiburonLabelRect = CGRectMake(79, 161, 51, 29);
-        {
-            NSString* textContent = @"Tiburon";
-            NSMutableParagraphStyle* tiburonLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-            tiburonLabelStyle.alignment = NSTextAlignmentRight;
-
-            NSDictionary* tiburonLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNextCondensed-Bold" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: FerryLifeStyleKit.dark, NSParagraphStyleAttributeName: tiburonLabelStyle};
-
-            CGFloat tiburonLabelTextHeight = [textContent boundingRectWithSize: CGSizeMake(tiburonLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: tiburonLabelFontAttributes context: nil].size.height;
-            CGContextSaveGState(context);
-            CGContextClipToRect(context, tiburonLabelRect);
-            [textContent drawInRect: CGRectMake(CGRectGetMinX(tiburonLabelRect), CGRectGetMinY(tiburonLabelRect) + (CGRectGetHeight(tiburonLabelRect) - tiburonLabelTextHeight) / 2, CGRectGetWidth(tiburonLabelRect), tiburonLabelTextHeight) withAttributes: tiburonLabelFontAttributes];
-            CGContextRestoreGState(context);
-        }
     }
 }
 
-+ (void)drawFerryMapIPhone6
++ (void)drawTerminalMarker
 {
-    //// General Declarations
-    CGContextRef context = UIGraphicsGetCurrentContext();
 
-    //// Symbol Drawing
-    CGRect symbolRect = CGRectMake(0, 0, 375, 467);
-    CGContextSaveGState(context);
-    UIRectClip(symbolRect);
-    CGContextTranslateCTM(context, symbolRect.origin.x, symbolRect.origin.y);
-    CGContextScaleCTM(context, symbolRect.size.width / 325, symbolRect.size.height / 405);
-
-    [FerryLifeStyleKit drawFerryMap];
-    CGContextRestoreGState(context);
+    //// disc Drawing
+    UIBezierPath* discPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(10, 9, 25, 25)];
+    [FerryLifeStyleKit.bright setFill];
+    [discPath fill];
+    [FerryLifeStyleKit.dark setStroke];
+    discPath.lineWidth = 4;
+    [discPath stroke];
 }
+
++ (void)drawDisabledTerminalMarker
+{
+
+    //// disc Drawing
+    UIBezierPath* discPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(10, 9, 25, 25)];
+    [FerryLifeStyleKit.disabledAccent setFill];
+    [discPath fill];
+    [FerryLifeStyleKit.disabled setStroke];
+    discPath.lineWidth = 4;
+    [discPath stroke];
+}
+
++ (void)drawHiddenTerminalMarker
+{
+}
+
+#pragma mark Generated Images
+
++ (UIImage*)imageOfTerminalMarker
+{
+    if (_imageOfTerminalMarker)
+        return _imageOfTerminalMarker;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(44, 44), NO, 0.0f);
+    [FerryLifeStyleKit drawTerminalMarker];
+
+    _imageOfTerminalMarker = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfTerminalMarker;
+}
+
++ (UIImage*)imageOfDisabledTerminalMarker
+{
+    if (_imageOfDisabledTerminalMarker)
+        return _imageOfDisabledTerminalMarker;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(44, 44), NO, 0.0f);
+    [FerryLifeStyleKit drawDisabledTerminalMarker];
+
+    _imageOfDisabledTerminalMarker = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfDisabledTerminalMarker;
+}
+
++ (UIImage*)imageOfHiddenTerminalMarker
+{
+    if (_imageOfHiddenTerminalMarker)
+        return _imageOfHiddenTerminalMarker;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(44, 44), NO, 0.0f);
+    [FerryLifeStyleKit drawHiddenTerminalMarker];
+
+    _imageOfHiddenTerminalMarker = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfHiddenTerminalMarker;
+}
+
+#pragma mark Customization Infrastructure
+
+- (void)setTerminalMarkerTargets: (NSArray*)terminalMarkerTargets
+{
+    _terminalMarkerTargets = terminalMarkerTargets;
+
+    for (id target in self.terminalMarkerTargets)
+        [target setImage: FerryLifeStyleKit.imageOfTerminalMarker];
+}
+
+- (void)setDisabledTerminalMarkerTargets: (NSArray*)disabledTerminalMarkerTargets
+{
+    _disabledTerminalMarkerTargets = disabledTerminalMarkerTargets;
+
+    for (id target in self.disabledTerminalMarkerTargets)
+        [target setImage: FerryLifeStyleKit.imageOfDisabledTerminalMarker];
+}
+
+- (void)setHiddenTerminalMarkerTargets: (NSArray*)hiddenTerminalMarkerTargets
+{
+    _hiddenTerminalMarkerTargets = hiddenTerminalMarkerTargets;
+
+    for (id target in self.hiddenTerminalMarkerTargets)
+        [target setImage: FerryLifeStyleKit.imageOfHiddenTerminalMarker];
+}
+
 
 @end
