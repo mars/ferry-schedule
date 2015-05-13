@@ -14,8 +14,8 @@
 #import "RCTRedBox.h"
 #import "RCTRootView.h"
 
-#define TIMEOUT_SECONDS 240
-#define TEXT_TO_LOOK_FOR @"Welcome to React Native!"
+#define TIMEOUT_SECONDS 10
+#define TEXT_TO_LOOK_FOR @"Marin-San Francisco Ferry Schedules"
 
 @interface FerryLifeTests : XCTestCase
 
@@ -37,7 +37,7 @@
   return NO;
 }
 
-- (void)testRendersWelcomeScreen {
+- (void)testRendersMapScreen {
   UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
   NSDate *date = [NSDate dateWithTimeIntervalSinceNow:TIMEOUT_SECONDS];
   BOOL foundElement = NO;

@@ -6,8 +6,21 @@ let { AppRegistry, StyleSheet, Text, View } = React;
 let styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  title: {
+    flex: 1,
+    fontSize: 12,
+    textAlign: 'center',
+    margin: 20
+  },
+  map: {
+    flex: 10,
+    height: 405,
+    width: 325,
+    backgroundColor: 'transparent'
   }
 });
 
@@ -16,7 +29,13 @@ let FerryLife = React.createClass({
   render() {
 
     return (
-      <MapView style={styles.container} {...this.props} />
+
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          Marin-San Francisco Ferry Schedules
+        </Text>
+        <MapView style={styles.map} {...this.props} />
+      </View>
     );
   }
 });
