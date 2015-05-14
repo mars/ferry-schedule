@@ -7,7 +7,6 @@
 //
 
 #import "RCTBridge.h"
-#import "RCTEventDispatcher.h"
 
 #import "FerryMapView.h"
 
@@ -15,7 +14,7 @@
 
 RCT_EXPORT_MODULE();
 
-@synthesize bridge = _bridge;
+@synthesize delegate;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -49,11 +48,11 @@ RCT_EXPORT_MODULE();
   NSString* foundTerminal = [self findTerminalMarkerWithPoint:currentLocation];
   
   if (foundTerminal) {
-    [self.bridge.eventDispatcher sendDeviceEventWithName:@"ferryTerminalSelected"
-                                              body:@{@"name": foundTerminal}];
-    NSLog(@"touched '%@'", foundTerminal);
-  } else {
-    NSLog(@"ignored touch");
+    if (self.delegate) {
+      [self.delegate ferryMapViewDidSelectTerminal:foundTerminal];
+    } else {
+      NSLog(@"FerryMapView: no delegate available to receive selection");
+    }
   }
 }
 

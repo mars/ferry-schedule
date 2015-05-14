@@ -11,8 +11,15 @@
 #import <UIKit/UIKit.h>
 #import "FerryLifeStyleKit.h"
 
+@protocol FerryMapViewDelegate <NSObject>
+
+- (void)ferryMapViewDidSelectTerminal:(NSString*)name;
+
+@end
+
 @interface FerryMapView : UIView<RCTBridgeModule>
 
+@property (nonatomic, weak) id <FerryMapViewDelegate> delegate;
 @property (nonatomic) int terminalMarkerSize;
 @property (nonatomic, strong) NSDictionary* terminalMarkers;
 

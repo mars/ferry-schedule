@@ -9,13 +9,24 @@
 #import "FerryMapViewManager.h"
 #import "FerryMapView.h"
 
+#import "RCTBridge.h"
+#import "RCTEventDispatcher.h"
+
 @implementation FerryMapViewManager
 
 RCT_EXPORT_MODULE();
 
 - (UIView *)view
 {
-  return [[FerryMapView alloc] init];
+  FerryMapView* ferryMapView = [[FerryMapView alloc] init];
+  ferryMapView.delegate = self;
+  return ferryMapView;
+}
+
+-(void)ferryMapViewDidSelectTerminal:(NSString*)name
+{
+  [self.bridge.eventDispatcher sendDeviceEventWithName:@"ferryTerminalSelected"
+                                                  body:@{@"name": name}];
 }
 
 @end

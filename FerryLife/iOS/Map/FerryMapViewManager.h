@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Mars Hall. All rights reserved.
 //
 
+#import "FerryMapView.h"
+
 #import "RCTViewManager.h"
 
-@interface FerryMapViewManager : RCTViewManager
+@interface FerryMapViewManager : RCTViewManager<FerryMapViewDelegate>
 
 @end

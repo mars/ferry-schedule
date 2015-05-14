@@ -22,7 +22,7 @@ class FerryMapView extends React.Component {
   componentDidMount() {
     this._subscription_SelectFerryTerminal = DeviceEventEmitter.addListener(
       'ferryTerminalSelected',
-      terminal => console.log('selected', terminal.name)
+      terminal => console.log('ferry terminal selected', terminal.name)
     );
   }
 
