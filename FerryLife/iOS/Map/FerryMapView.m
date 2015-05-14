@@ -48,9 +48,13 @@ RCT_EXPORT_MODULE();
   CGPoint currentLocation = [touch locationInView:self];
   NSString* foundTerminal = [self findTerminalMarkerWithPoint:currentLocation];
   
-  NSLog(@"touched '%@'", foundTerminal);
-  [_bridge.eventDispatcher sendDeviceEventWithName:@"SelectFerryTerminal"
-                                               body:@{@"name": foundTerminal}];
+  if (foundTerminal) {
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"ferryTerminalSelected"
+                                              body:@{@"name": foundTerminal}];
+    NSLog(@"touched '%@'", foundTerminal);
+  } else {
+    NSLog(@"ignored touch");
+  }
 }
 
 - (NSString*)findTerminalMarkerWithPoint:(CGPoint)refPoint

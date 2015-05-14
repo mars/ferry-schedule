@@ -1,6 +1,7 @@
 import React from 'react-native';
 
 let {
+  DeviceEventEmitter,
   requireNativeComponent,
   StyleSheet,
   View } = React;
@@ -17,6 +18,18 @@ let styles = StyleSheet.create({
 });
 
 class FerryMapView extends React.Component {
+
+  componentDidMount() {
+    this._subscription_SelectFerryTerminal = DeviceEventEmitter.addListener(
+      'ferryTerminalSelected',
+      terminal => console.log('selected', terminal.name)
+    );
+  }
+
+  componentWillUnmount() {
+    this._subscription_SelectFerryTerminal.remove();
+  }
+
   render() {
     return <View style={styles.scene}>
       <NativeFerryMapView style={styles.map} {...this.props} />
