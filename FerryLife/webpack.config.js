@@ -21,7 +21,10 @@ module.exports = {
   },
   externals: ignoreModules,
   resolve: {
-    extensions: ['', '.js', '.jsx', '.es6']
+    extensions: ['', '.js', '.jsx', '.es6'],
+    alias: {
+      'ferry-life-base': path.join(__dirname, '../')
+    }
   },
   plugins: [
     new webpack.NoErrorsPlugin(),

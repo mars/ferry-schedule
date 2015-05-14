@@ -41,9 +41,16 @@ class FerryMapView extends React.Component {
     this.props.navigator.push({
       component: FerryListingView,
       title: 'Marin-SF Ferry Schedules',
-      passProps: { terminalName: terminalName }
+      passProps: {
+        scheduleData: this.props.scheduleData,
+        terminalName: terminalName
+      }
     })
   }
+}
+
+FerryMapView.propTypes = {
+  scheduleData: React.PropTypes.object
 }
 
 var NativeFerryMapView = requireNativeComponent('FerryMapView', FerryMapView);

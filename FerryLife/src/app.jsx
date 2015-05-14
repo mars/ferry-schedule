@@ -1,5 +1,6 @@
 import React from 'react-native';
 import FerryMapView from './ferry-map';
+import scheduleData from 'ferry-life-base/collector/current-data';
 
 let {
   AppRegistry,
@@ -25,8 +26,8 @@ let FerryLife = React.createClass({
         ref='nav'
         initialRoute={{
           component: FerryMapView,
-          title: 'Marin-SF Ferry Schedules'
-          // passProps: { myProp: 'foo' }
+          title: 'Marin-SF Ferry Schedules',
+          passProps: { scheduleData: scheduleData }
         }}
         barTintColor='#333333'
         tintColor='#FFFFFF'
