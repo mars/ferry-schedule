@@ -13,15 +13,33 @@ let {
 let styles = StyleSheet.create({
   scene: {
     flex: 1
+  },
+  text: {
+    color: '#FFFFFF'
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    padding: 10
+  },
+  cell: {
+    flex: 1
+  },
+  rightAlign: {
+    textAlign: 'right'
+  },
+  primaryData: {
+    fontSize: 18
   }
 });
 
 class FerryListingView extends React.Component {
 
   render() {
-    console.log('this.props.scheduleData', this.props.scheduleData);
     return <ScrollView style={styles.scene} {...this.props} >
-      <Text>{currentRouteTime()} schedule</Text>
+      <View style={styles.row}>
+        <Text style={styles.text}>{currentRouteTime()} schedule</Text>
+      </View>
       {this.renderJourneys()}
     </ScrollView>;
   }
@@ -33,7 +51,16 @@ class FerryListingView extends React.Component {
 
     var journeyComponents = journeys.map( j => {
       return <TouchableHighlight key={j.id}>
-        <Text>{j.location} {j.time} --- {j.location2} {j.time2}</Text>
+        <View style={styles.row}>
+          <View style={styles.cell}>
+            <Text style={styles.text}>{j.location.name}</Text>
+            <Text style={[styles.text, styles.primaryData]}>{j.time.format('h:mm a')}</Text>
+          </View>
+          <View style={styles.cell}>
+            <Text style={[styles.text, styles.rightAlign]}>{j.location2.name}</Text>
+            <Text style={[styles.text, styles.rightAlign, styles.primaryData]}>{j.time2.format('h:mm a')}</Text>
+          </View>
+        </View>
       </TouchableHighlight>;
     })
 

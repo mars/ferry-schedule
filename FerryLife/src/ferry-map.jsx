@@ -9,7 +9,8 @@ let {
 
 let styles = StyleSheet.create({
   scene: {
-    flex: 1
+    flex: 1,
+    paddingTop: 74
   },
   map: {
     flex: 1,

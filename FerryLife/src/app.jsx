@@ -12,7 +12,6 @@ let styles = StyleSheet.create({
     flex: 1
   },
   route: {
-    paddingTop: 74,
     backgroundColor: '#333333'
   }
 });
