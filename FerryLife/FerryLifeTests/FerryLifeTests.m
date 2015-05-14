@@ -15,7 +15,7 @@
 #import "RCTRootView.h"
 
 #define TIMEOUT_SECONDS 10
-#define TEXT_TO_LOOK_FOR @"Marin-San Francisco Ferry Schedules"
+#define TEXT_TO_LOOK_FOR @"Marin-SF Ferry Schedules"
 
 @interface FerryLifeTests : XCTestCase
 

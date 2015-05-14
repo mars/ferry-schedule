@@ -1,43 +1,42 @@
 import React from 'react-native';
 import FerryMapView from './ferry-map';
 
-let { AppRegistry, StyleSheet, Text, View } = React;
+let {
+  AppRegistry,
+  NavigatorIOS,
+  StyleSheet } = React;
 
 let styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flex: 1
   },
-  title: {
-    flex: 1,
-    fontSize: 12,
-    textAlign: 'center',
-    margin: 20
-  },
-  map: {
-    flex: 10,
-    height: 405,
-    width: 325,
-    backgroundColor: 'transparent'
+  route: {
+    paddingTop: 74,
+    backgroundColor: '#333333'
   }
 });
 
 let FerryLife = React.createClass({
 
   render() {
-
     return (
-
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Marin-San Francisco Ferry Schedules
-        </Text>
-        <FerryMapView style={styles.map} {...this.props} />
-      </View>
-    );
+      // <FerryMapView />
+      <NavigatorIOS
+        ref='nav'
+        initialRoute={{
+          component: FerryMapView,
+          title: 'Marin-SF Ferry Schedules'
+          // passProps: { myProp: 'foo' }
+        }}
+        barTintColor='#333333'
+        tintColor='#FFFFFF'
+        titleTextColor='#CCCCCC'
+        style={styles.container}
+        itemWrapperStyle={styles.route}
+      />
+    )
   }
+
 });
 
 AppRegistry.registerComponent('FerryLife', () => FerryLife);
