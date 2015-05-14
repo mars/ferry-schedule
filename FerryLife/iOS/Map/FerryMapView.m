@@ -34,10 +34,15 @@ RCT_EXPORT_MODULE();
   [FerryLifeStyleKit drawFerryMap];
   
   UIImage* terminalMarker = [FerryLifeStyleKit imageOfTerminalMarker];
+  UIImage* selectedTerminalMarker = [FerryLifeStyleKit imageOfSelectedTerminalMarker];
   NSValue* marker;
   for (NSString* terminal in self.terminalMarkers) {
     marker = [self.terminalMarkers objectForKey:terminal];
-    [terminalMarker drawAtPoint:[marker CGPointValue]];
+    if (terminal == self.selectedTerminal) {
+      [selectedTerminalMarker drawAtPoint:[marker CGPointValue]];
+    } else {
+      [terminalMarker drawAtPoint:[marker CGPointValue]];
+    }
   }
 }
 
@@ -48,6 +53,9 @@ RCT_EXPORT_MODULE();
   NSString* foundTerminal = [self findTerminalMarkerWithPoint:currentLocation];
   
   if (foundTerminal) {
+    self.selectedTerminal = foundTerminal;
+    [self setNeedsDisplay];
+    
     if (self.delegate) {
       [self.delegate ferryMapViewDidSelectTerminal:foundTerminal];
     } else {

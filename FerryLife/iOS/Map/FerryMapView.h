@@ -22,5 +22,6 @@
 @property (nonatomic, weak) id <FerryMapViewDelegate> delegate;
 @property (nonatomic) int terminalMarkerSize;
 @property (nonatomic, strong) NSDictionary* terminalMarkers;
+@property (nonatomic, strong) NSString* selectedTerminal;
 
 @end
