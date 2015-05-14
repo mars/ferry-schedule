@@ -1,4 +1,5 @@
 import React from 'react-native';
+import FerryListingView from './ferry-listing';
 
 let {
   DeviceEventEmitter,
@@ -22,7 +23,7 @@ class FerryMapView extends React.Component {
   componentDidMount() {
     this._subscription_SelectFerryTerminal = DeviceEventEmitter.addListener(
       'ferryTerminalSelected',
-      terminal => console.log('ferry terminal selected', terminal.name)
+      terminal => this.transitionToFerryListing(terminal.name)
     );
   }
 
@@ -34,6 +35,14 @@ class FerryMapView extends React.Component {
     return <View style={styles.scene}>
       <NativeFerryMapView style={styles.map} {...this.props} />
     </View>;
+  }
+
+  transitionToFerryListing(terminalName) {
+    this.props.navigator.push({
+      component: FerryListingView,
+      title: 'Marin-SF Ferry Schedules',
+      passProps: { terminalName: terminalName }
+    })
   }
 }
 

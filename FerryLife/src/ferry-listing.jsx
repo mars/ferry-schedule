@@ -12,12 +12,16 @@ let styles = StyleSheet.create({
 });
 
 class FerryListingView extends React.Component {
-  
+
   render() {
     return <View style={styles.scene} {...this.props} >
-      <Text>Howdy</Text>
+      <Text>{this.props.terminalName ? this.props.terminalName : 'All Routes'}</Text>
     </View>;
   }
+}
+
+FerryListingView.propTypes = {
+  terminalName: React.PropTypes.string
 }
 
 export default FerryListingView;
