@@ -18,6 +18,9 @@ let styles = StyleSheet.create({
   text: {
     color: '#FFFFFF'
   },
+  deselectedText: {
+    color: '#666666'
+  },
   row: {
     flexDirection: 'row',
     flexWrap: 'nowrap',
@@ -30,7 +33,10 @@ let styles = StyleSheet.create({
     textAlign: 'right'
   },
   primaryData: {
-    fontSize: 18
+    fontSize: 24
+  },
+  tappableText: {
+    padding: 10
   }
 });
 
@@ -43,7 +49,7 @@ class FerryListingView extends React.Component {
     this.state = {
       journeys: null,
       query: {
-        'time': null,
+        'time': 'weekday',
         'location-name': props.terminalName,
         'location-filter': null
       }
@@ -57,14 +63,31 @@ class FerryListingView extends React.Component {
           key='weekday-selector'
           style={styles.cell}
           onPress={this.updateListing.bind(this, { time: 'weekday' })}>
-          <Text style={styles.text}>Weekday</Text>
+          <Text style={[
+            styles.text,
+            styles.tappableText,
+            styles.rightAlign,
+            this.state.query.time !== 'weekday' ?
+              styles.deselectedText : null ]}>Weekday</Text>
         </TouchableHighlight>
         <TouchableHighlight
           key='weekend-selector'
           style={styles.cell}
           onPress={this.updateListing.bind(this, { time: 'weekend' })}>
-          <Text style={styles.text}>Weekend</Text>
+          <Text style={[
+            styles.text,
+            styles.tappableText,
+            this.state.query.time !== 'weekend' ?
+              styles.deselectedText : null ]}>Weekend</Text>
         </TouchableHighlight>
+      </View>
+      <View style={styles.row}>
+        <View style={styles.cell}>
+          <Text style={styles.text}>{'Origin'}</Text>
+        </View>
+        <View style={styles.cell}>
+          <Text style={[styles.text, styles.rightAlign]}>{'Destination'}</Text>
+        </View>
       </View>
       {this.renderJourneys()}
     </ScrollView>
