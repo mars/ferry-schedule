@@ -25,7 +25,6 @@ let FerryLife = React.createClass({
 
   render() {
     return (
-      // <FerryMapView />
       <NavigatorIOS
         ref='nav'
         initialRoute={{
