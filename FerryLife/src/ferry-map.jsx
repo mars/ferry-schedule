@@ -39,9 +39,16 @@ class FerryMapView extends React.Component {
   }
 
   transitionToFerryListing(terminalName) {
+    var terminalTitle = _.result( _.find(
+        this.props.scheduleData.linked.locations,
+        { id: terminalName }
+    ), 'name')
+    if (terminalTitle == null) {
+      throw new Error(`Schedule data does not contain that terminal: ${terminalName}`)
+    }
     this.props.navigator.push({
       component: FerryListingView,
-      title: 'Marin-SF Ferry Schedules',
+      title: terminalTitle,
       passProps: {
         scheduleData: this.props.scheduleData,
         terminalName: terminalName
