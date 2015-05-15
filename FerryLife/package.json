@@ -7,6 +7,7 @@
     "webpack": "node_modules/.bin/webpack --config webpack.config.js --colors --progress"
   },
   "dependencies": {
+    "lodash": "^3.8.0",
     "react-native": "0.4.2"
   },
   "devDependencies": {

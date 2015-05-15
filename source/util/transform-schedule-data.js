@@ -22,7 +22,7 @@ module.exports = function transformScheduleData(scheduleData, query) {
   }
 
   var timeQuery = query['time']
-  if (timeQuery !== undefined && timeQuery !== '') {
+  if (timeQuery != null && timeQuery !== '') {
     timeQuery = timeQuery.toLowerCase();
   } else {
     timeQuery = currentRouteTime();

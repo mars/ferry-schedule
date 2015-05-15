@@ -1,4 +1,5 @@
 import React from 'react-native';
+import _ from 'lodash';
 
 import currentRouteTime from 'ferry-life-base/source/util/current-route-time';
 import transformScheduleData from 'ferry-life-base/source/util/transform-schedule-data';
@@ -35,21 +36,46 @@ let styles = StyleSheet.create({
 
 class FerryListingView extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    // getInitialState
+    this.state = {
+      journeys: null,
+      query: {
+        'time': null,
+        'location-name': props.terminalName,
+        'location-filter': null
+      }
+    }
+  }
+
   render() {
     return <ScrollView style={styles.scene} {...this.props} >
       <View style={styles.row}>
-        <Text style={styles.text}>{currentRouteTime()} schedule</Text>
+        <TouchableHighlight
+          key='weekday-selector'
+          style={styles.cell}
+          onPress={this.updateListing.bind(null, { time: 'weekday' })}>
+          <Text style={styles.text}>Weekday</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          key='weekend-selector'
+          style={styles.cell}
+          onPress={this.updateListing.bind(null, { time: 'weekend' })}>
+          <Text style={styles.text}>Weekend</Text>
+        </TouchableHighlight>
       </View>
       {this.renderJourneys()}
-    </ScrollView>;
+    </ScrollView>
   }
 
   renderJourneys() {
-    var journeys = transformScheduleData(this.props.scheduleData, {
-      'location-name': this.props.terminalName
-    })
+    var journeys = transformScheduleData(
+      this.props.scheduleData,
+      this.state.query );
 
-    var journeyComponents = journeys.map( j => {
+    return journeys.map( j => {
       return <TouchableHighlight key={j.id}>
         <View style={styles.row}>
           <View style={styles.cell}>
@@ -61,10 +87,13 @@ class FerryListingView extends React.Component {
             <Text style={[styles.text, styles.rightAlign, styles.primaryData]}>{j.time2.format('h:mm a')}</Text>
           </View>
         </View>
-      </TouchableHighlight>;
+      </TouchableHighlight>
     })
+  }
 
-    return journeyComponents;
+  updateListing(scheduleDataQuery) {
+    var query = _.assign({}, this.state.query, scheduleDataQuery)
+    this.setState({ query })
   }
 }
 
