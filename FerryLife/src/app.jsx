@@ -5,6 +5,7 @@ import scheduleData from 'ferry-life-base/collector/current-data';
 let {
   AppRegistry,
   NavigatorIOS,
+  StatusBarIOS,
   StyleSheet } = React;
 
 let styles = StyleSheet.create({
@@ -17,6 +18,10 @@ let styles = StyleSheet.create({
 });
 
 let FerryLife = React.createClass({
+
+  componentDidMount() {
+    StatusBarIOS.setStyle(StatusBarIOS.Style.lightContent)
+  },
 
   render() {
     return (
