@@ -56,13 +56,13 @@ class FerryListingView extends React.Component {
         <TouchableHighlight
           key='weekday-selector'
           style={styles.cell}
-          onPress={this.updateListing.bind(null, { time: 'weekday' })}>
+          onPress={this.updateListing.bind(this, { time: 'weekday' })}>
           <Text style={styles.text}>Weekday</Text>
         </TouchableHighlight>
         <TouchableHighlight
           key='weekend-selector'
           style={styles.cell}
-          onPress={this.updateListing.bind(null, { time: 'weekend' })}>
+          onPress={this.updateListing.bind(this, { time: 'weekend' })}>
           <Text style={styles.text}>Weekend</Text>
         </TouchableHighlight>
       </View>
