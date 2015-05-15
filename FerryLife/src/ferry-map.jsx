@@ -5,6 +5,7 @@ let {
   DeviceEventEmitter,
   requireNativeComponent,
   StyleSheet,
+  Text,
   View } = React;
 
 let styles = StyleSheet.create({
@@ -15,7 +16,22 @@ let styles = StyleSheet.create({
   map: {
     flex: 1,
     width: 325,
+    height: 405,
     alignSelf: 'center'
+  },
+  text: {
+    color: '#CCCCCC'
+  },
+  column: {
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    padding: 10
+  },
+  cell: {
+    flex: 1
+  },
+  centerAlign: {
+    textAlign: 'center'
   }
 });
 
@@ -35,6 +51,13 @@ class FerryMapView extends React.Component {
   render() {
     return <View style={styles.scene}>
       <NativeFerryMapView style={styles.map} {...this.props} />
+      <View style={styles.column}>
+        <View style={styles.cell}>
+          <Text style={[
+            styles.text,
+            styles.centerAlign ]}>{'Effective 2015-04-27 through 2015-11-01'}</Text>
+        </View>
+      </View>
     </View>;
   }
 
