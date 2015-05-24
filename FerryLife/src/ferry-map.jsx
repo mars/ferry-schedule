@@ -15,9 +15,7 @@ let styles = StyleSheet.create({
   },
   map: {
     flex: 1,
-    width: 325,
-    height: 405,
-    alignSelf: 'center'
+    alignSelf: 'stretch'
   },
   text: {
     color: '#CCCCCC'

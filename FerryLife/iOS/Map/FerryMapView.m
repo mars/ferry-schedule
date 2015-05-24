@@ -20,28 +20,47 @@ RCT_EXPORT_MODULE();
 {
   self = [super initWithFrame:frame];
   if (self) {
-    self.terminalMarkerSize = 44;
+    // "intrinsic" is the original size of the drawing (in PaintCode)
+    self.intrinsicMapWidth = 320;
+    self.intrinsicMarkerSize = 44;
+    // origins of markers in the original drawing (in PaintCode)
     self.terminalMarkers = @{
                              @"tiburon": [NSValue valueWithCGPoint:CGPointMake(124, 162)],
                              @"sf-pier-41": [NSValue valueWithCGPoint:CGPointMake(188, 291)],
                              @"sf-ferry-bldg": [NSValue valueWithCGPoint:CGPointMake(231, 312)]
                              };
+    // scaled coordinates to be dynamically populated at render-time
+    self.scaledTerminalMarkers = [[NSMutableDictionary alloc] init];
   }
   return self;
 }
 
 - (void)drawRect:(CGRect)rect {
-  [FerryLifeStyleKit drawFerryMap];
+  // scale the map & its interactions to fit the device's fullgit width
+  CGFloat displayWidth = rect.size.width;
+  float scale = (displayWidth / self.intrinsicMapWidth);
+  float scalePercent = scale * 100;
   
-  UIImage* terminalMarker = [FerryLifeStyleKit imageOfTerminalMarker];
-  UIImage* selectedTerminalMarker = [FerryLifeStyleKit imageOfSelectedTerminalMarker];
-  NSValue* marker;
+  self.scaledTerminalMarkerSize = self.intrinsicMarkerSize * scale;
+  
+  // Since the terminal points are centered, we need to include a scaled offset to their new origin.
+  float scaledOriginOffset = (self.intrinsicMarkerSize / 2) - (self.scaledTerminalMarkerSize / 2);
+  
+  [FerryLifeStyleKit drawFerryMapWithScalePercent:scalePercent];
+  
+  UIImage* terminalMarker = [FerryLifeStyleKit imageOfTerminalMarkerWithScalePercent:scalePercent];
+  UIImage* selectedTerminalMarker = [FerryLifeStyleKit imageOfSelectedTerminalMarkerWithScalePercent:scalePercent];
+  CGPoint marker;
   for (NSString* terminal in self.terminalMarkers) {
-    marker = [self.terminalMarkers objectForKey:terminal];
+    marker = [[self.terminalMarkers objectForKey:terminal] CGPointValue];
+    CGPoint scaledPoint = CGPointMake((marker.x * scale) - scaledOriginOffset,
+                                      (marker.y * scale) - scaledOriginOffset);
+    [self.scaledTerminalMarkers setObject:[NSValue valueWithCGPoint:scaledPoint]
+                                   forKey:terminal];
     if (terminal == self.selectedTerminal) {
-      [selectedTerminalMarker drawAtPoint:[marker CGPointValue]];
+      [selectedTerminalMarker drawAtPoint:scaledPoint];
     } else {
-      [terminalMarker drawAtPoint:[marker CGPointValue]];
+      [terminalMarker drawAtPoint:scaledPoint];
     }
   }
 }
@@ -70,14 +89,14 @@ RCT_EXPORT_MODULE();
   CGPoint markerPoint;
   NSString* foundTerminal;
   BOOL didFind = false;
-  for (NSString* terminal in self.terminalMarkers) {
-    marker = [self.terminalMarkers objectForKey:terminal];
+  for (NSString* terminal in self.scaledTerminalMarkers) {
+    marker = [self.scaledTerminalMarkers objectForKey:terminal];
     markerPoint = [marker CGPointValue];
     didFind =
       markerPoint.x <= refPoint.x &&
-      markerPoint.x + self.terminalMarkerSize >= refPoint.x &&
+      markerPoint.x + self.scaledTerminalMarkerSize >= refPoint.x &&
       markerPoint.y <= refPoint.y &&
-      markerPoint.y + self.terminalMarkerSize >= refPoint.y;
+      markerPoint.y + self.scaledTerminalMarkerSize >= refPoint.y;
     
     if (didFind) {
       foundTerminal = terminal;

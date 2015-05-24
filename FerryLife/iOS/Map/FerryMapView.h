@@ -20,8 +20,11 @@
 @interface FerryMapView : UIView<RCTBridgeModule>
 
 @property (nonatomic, weak) id <FerryMapViewDelegate> delegate;
-@property (nonatomic) int terminalMarkerSize;
+@property (nonatomic) int intrinsicMarkerSize;
+@property (nonatomic) float intrinsicMapWidth;
 @property (nonatomic, strong) NSDictionary* terminalMarkers;
+@property (nonatomic) float scaledTerminalMarkerSize;
+@property (nonatomic, strong) NSMutableDictionary* scaledTerminalMarkers;
 @property (nonatomic, strong) NSString* selectedTerminal;
 
 @end
