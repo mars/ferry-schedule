@@ -35,7 +35,7 @@ var Listing = React.createClass({
 
       <div key='geolocation-details' className='help'>
         { this.props.foundPosition ? 
-            this.props.locationsByDistance[0].distanceMiles
+            this.props.locationsByDistance[0].distanceMiles.toPrecision(2)
               +' miles from '
               + this.props.locationsByDistance[0].name: 
             'Current Position Unknown' }

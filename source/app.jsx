@@ -61,11 +61,16 @@ var App = React.createClass({
     Position.timestamp Read only
     Returns a DOMTimeStamp representing the time at which the location was retrieved.
     */
+    var sortedLocations = this.sortLocationsByDistance(
+        position, this.props.scheduleData.linked.locations);
+
     this.setState({
       foundPosition: true,
-      locationsByDistance: this.sortLocationsByDistance(
-        position, this.props.scheduleData.linked.locations)
+      locationsByDistance: sortedLocations
     });
+
+    console.log('position', position);
+    console.log('locationsByDistance', sortedLocations);
   },
 
   sortLocationsByDistance: function(position, locations) {
@@ -85,11 +90,11 @@ var App = React.createClass({
     distances.distanceMiles = GeocodeDistance.calc(
       coords1.latitude, coords1.longitude,
       coords2.latitude, coords2.longitude,
-      GeocodeDistance.EarthRadiusInMiles).toPrecision(2);
+      GeocodeDistance.EarthRadiusInMiles);
     distances.distanceKm = GeocodeDistance.calc(
       coords1.latitude, coords1.longitude,
       coords2.latitude, coords2.longitude,
-      GeocodeDistance.EarthRadiusInKilometers).toPrecision(2);
+      GeocodeDistance.EarthRadiusInKilometers);
     return distances;
   },
 
