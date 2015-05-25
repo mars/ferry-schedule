@@ -16,7 +16,7 @@ let styles = StyleSheet.create({
     flex: 1
   },
   text: {
-    color: '#FFFFFF'
+    color: '#cccccc'
   },
   deselectedText: {
     color: '#666666'
@@ -32,7 +32,11 @@ let styles = StyleSheet.create({
   rightAlign: {
     textAlign: 'right'
   },
+  centerAlign: {
+    textAlign: 'center'
+  },
   primaryData: {
+    color: '#ffffff',
     fontSize: 24
   },
   tappableText: {
@@ -81,15 +85,16 @@ class FerryListingView extends React.Component {
               styles.deselectedText : null ]}>Weekend</Text>
         </TouchableHighlight>
       </View>
+
+      {this.renderJourneys()}
+      
       <View style={styles.row}>
         <View style={styles.cell}>
-          <Text style={styles.text}>{'Origin'}</Text>
-        </View>
-        <View style={styles.cell}>
-          <Text style={[styles.text, styles.rightAlign]}>{'Destination'}</Text>
+          <Text style={[
+            styles.text,
+            styles.centerAlign ]}>{'Effective 2015-04-27 through 2015-11-01'}</Text>
         </View>
       </View>
-      {this.renderJourneys()}
     </ScrollView>
   }
 
@@ -98,7 +103,7 @@ class FerryListingView extends React.Component {
       this.props.scheduleData,
       this.state.query );
 
-    return journeys.map( j => {
+    var journeyComponents = journeys.map( j => {
       return <TouchableHighlight key={j.id}>
         <View style={styles.row}>
           <View style={styles.cell}>
@@ -112,6 +117,29 @@ class FerryListingView extends React.Component {
         </View>
       </TouchableHighlight>
     })
+
+    if (journeyComponents.length === 0) {
+      journeyComponents.push(
+        <View style={styles.row}>
+          <View style={styles.cell}>
+            <Text style={[styles.text, styles.centerAlign, styles.primaryData]}>{'No routes at this time.'}</Text>
+          </View>
+        </View>
+      )
+    } else {
+      journeyComponents.unshift(
+        <View style={styles.row}>
+          <View style={styles.cell}>
+            <Text style={styles.text}>{'Origin'}</Text>
+          </View>
+          <View style={styles.cell}>
+            <Text style={[styles.text, styles.rightAlign]}>{'Destination'}</Text>
+          </View>
+        </View>
+      )
+    }
+
+    return journeyComponents
   }
 
   updateListing(scheduleDataQuery) {
