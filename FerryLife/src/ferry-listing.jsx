@@ -49,7 +49,7 @@ class FerryListingView extends React.Component {
     this.state = {
       journeys: null,
       query: {
-        'time': 'weekday',
+        'time': currentRouteTime(),
         'location-name': props.terminalName,
         'location-filter': null
       }
