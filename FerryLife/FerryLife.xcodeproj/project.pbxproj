@@ -20,6 +20,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		4186ABB21B12AB2E00F6C54F /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 4186ABB11B12AB2E00F6C54F /* main.jsbundle */; };
 		41C390C51B029602006593F3 /* FerryMapViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C390C41B029602006593F3 /* FerryMapViewManager.m */; };
 		41C390C81B029635006593F3 /* FerryMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C390C71B029635006593F3 /* FerryMapView.m */; };
 		41C390CB1B029700006593F3 /* FerryLifeStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C390CA1B029700006593F3 /* FerryLifeStyleKit.m */; };
@@ -117,6 +118,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = iOS/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = iOS/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		4186ABB11B12AB2E00F6C54F /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = iOS/main.jsbundle; sourceTree = "<group>"; };
 		41C390C31B029602006593F3 /* FerryMapViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FerryMapViewManager.h; path = iOS/Map/FerryMapViewManager.h; sourceTree = "<group>"; };
 		41C390C41B029602006593F3 /* FerryMapViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FerryMapViewManager.m; path = iOS/Map/FerryMapViewManager.m; sourceTree = "<group>"; };
 		41C390C61B029635006593F3 /* FerryMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FerryMapView.h; path = iOS/Map/FerryMapView.h; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 		13B07FAE1A68108700A75B9A /* FerryLife */ = {
 			isa = PBXGroup;
 			children = (
+				4186ABB11B12AB2E00F6C54F /* main.jsbundle */,
 				41C390C91B029700006593F3 /* FerryLifeStyleKit.h */,
 				41C390CA1B029700006593F3 /* FerryLifeStyleKit.m */,
 				41C390C21B0295D9006593F3 /* Map */,
@@ -497,6 +500,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4186ABB21B12AB2E00F6C54F /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
