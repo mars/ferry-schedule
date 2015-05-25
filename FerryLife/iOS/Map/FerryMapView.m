@@ -36,7 +36,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void)drawRect:(CGRect)rect {
-  // scale the map & its interactions to fit the device's fullgit width
+  // scale the map & its interactions to fit the device's full width
   CGFloat displayWidth = rect.size.width;
   float scale = (displayWidth / self.intrinsicMapWidth);
   float scalePercent = scale * 100;

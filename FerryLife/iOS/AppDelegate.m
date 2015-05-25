@@ -49,10 +49,7 @@
                                                       moduleName:@"FerryLife"
                                                    launchOptions:launchOptions];
   
-  rootView.backgroundColor = [UIColor colorWithRed:0.15
-                                             green:0.15
-                                              blue:0.15
-                                             alpha:1.0];
+  rootView.backgroundColor = [FerryLifeStyleKit background];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [[UIViewController alloc] init];

@@ -25,6 +25,9 @@
 + (UIColor*)vividWater;
 + (UIColor*)disabled;
 + (UIColor*)disabledAccent;
++ (UIColor*)selection;
++ (UIColor*)selectionAccent;
++ (UIColor*)background;
 
 // Drawing Methods
 + (void)drawFerryMapWithScalePercent: (CGFloat)scalePercent;

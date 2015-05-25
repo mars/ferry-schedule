@@ -22,6 +22,9 @@ static UIColor* _dark = nil;
 static UIColor* _vividWater = nil;
 static UIColor* _disabled = nil;
 static UIColor* _disabledAccent = nil;
+static UIColor* _selection = nil;
+static UIColor* _selectionAccent = nil;
+static UIColor* _background = nil;
 
 static UIImage* _imageOfHiddenTerminalMarker = nil;
 
@@ -46,6 +49,12 @@ static UIImage* _imageOfHiddenTerminalMarker = nil;
     [_disabled getHue: &disabledHSBA[0] saturation: &disabledHSBA[1] brightness: &disabledHSBA[2] alpha: &disabledHSBA[3]];
 
     _disabledAccent = [UIColor colorWithHue: disabledHSBA[0] saturation: disabledHSBA[1] brightness: 0.8 alpha: disabledHSBA[3]];
+    _selection = [UIColor colorWithRed: 1 green: 0.487 blue: 0 alpha: 1];
+    CGFloat selectionHSBA[4];
+    [_selection getHue: &selectionHSBA[0] saturation: &selectionHSBA[1] brightness: &selectionHSBA[2] alpha: &selectionHSBA[3]];
+
+    _selectionAccent = [UIColor colorWithHue: selectionHSBA[0] saturation: 0.3 brightness: selectionHSBA[2] alpha: selectionHSBA[3]];
+    _background = [UIColor colorWithRed: 0.2 green: 0.2 blue: 0.2 alpha: 1];
 
 }
 
@@ -58,6 +67,9 @@ static UIImage* _imageOfHiddenTerminalMarker = nil;
 + (UIColor*)vividWater { return _vividWater; }
 + (UIColor*)disabled { return _disabled; }
 + (UIColor*)disabledAccent { return _disabledAccent; }
++ (UIColor*)selection { return _selection; }
++ (UIColor*)selectionAccent { return _selectionAccent; }
++ (UIColor*)background { return _background; }
 
 #pragma mark Drawing Methods
 
@@ -692,12 +704,6 @@ static UIImage* _imageOfHiddenTerminalMarker = nil;
     //// General Declarations
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    //// Color Declarations
-    UIColor* selection = [UIColor colorWithRed: 1 green: 0.487 blue: 0 alpha: 1];
-    CGFloat selectionHSBA[4];
-    [selection getHue: &selectionHSBA[0] saturation: &selectionHSBA[1] brightness: &selectionHSBA[2] alpha: &selectionHSBA[3]];
-
-    UIColor* selectionAccent = [UIColor colorWithHue: selectionHSBA[0] saturation: 0.3 brightness: selectionHSBA[2] alpha: selectionHSBA[3]];
 
     //// Variable Declarations
     CGFloat scale = scalePercent * 0.01;
@@ -708,9 +714,9 @@ static UIImage* _imageOfHiddenTerminalMarker = nil;
     CGContextScaleCTM(context, scale, scale);
 
     UIBezierPath* discPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-12.5, -12.5, 25, 25)];
-    [selectionAccent setFill];
+    [FerryLifeStyleKit.selectionAccent setFill];
     [discPath fill];
-    [selection setStroke];
+    [FerryLifeStyleKit.selection setStroke];
     discPath.lineWidth = 4;
     [discPath stroke];
 
