@@ -40,6 +40,7 @@ RCT_EXPORT_MODULE();
   CGFloat displayWidth = rect.size.width;
   float scale = (displayWidth / self.intrinsicMapWidth);
   float scalePercent = scale * 100;
+  NSLog(@"FerryMapView#drawRect displayWidth:%f scale:%f", displayWidth, scale);
   
   self.scaledTerminalMarkerSize = self.intrinsicMarkerSize * scale;
   
