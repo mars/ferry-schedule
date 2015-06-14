@@ -1,3 +1,6 @@
+Now released in the iOS App Store 
+[FerryLife: Tiburon–San Francisco](https://appsto.re/us/Kupu7.i)
+
 #### Run for Dev
 
 * Run backend server `npm run watch`
