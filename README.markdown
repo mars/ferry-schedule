@@ -1,3 +1,5 @@
+Web version lives at http://ferry.life
+
 Now released in the iOS App Store 
 [FerryLife: Tiburon–San Francisco](https://appsto.re/us/Kupu7.i)
 
